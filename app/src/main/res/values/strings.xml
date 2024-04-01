@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Food Ordering App</string>
+    <string name="application_name">Fooding Heaven</string>
+    <string name="app_logo_text">App logo</string>
+    <string name="app_tagline">Feels like Magic..</string>
+    <string name="designer">Designed By:- \nKrishna Agrawal</string>
+    <string name="start_background_description">start screen photo</string>
+    <string name="start_screen_tagline">Power of Tasty Meals at the palm of your hand</string>
+    <string name="login_title">Login to your Account</string>
+    <string name="signup_title">Sign Up Here</string>
+</resources>

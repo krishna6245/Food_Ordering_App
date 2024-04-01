@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="ascent_color">#1FC57A</color>
+    <color name="gradient_start_color">#53E88B</color>
+    <color name="gradient_end_color">#15BE77</color>
+</resources>
+
+    <!--    1AAA65  alternate ascent color-->
