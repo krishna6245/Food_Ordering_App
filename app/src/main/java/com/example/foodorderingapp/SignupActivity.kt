@@ -36,7 +36,7 @@ class SignupActivity : AppCompatActivity() {
             val password=binding.signupActivityPassword.text.toString()
             if(true){//TODO
                 Handler().postDelayed({
-                    val intent= Intent(this,MainActivity::class.java)
+                    val intent= Intent(this,SelectLocationActivity::class.java)
                     startActivity(intent)
                     finish()
                 },0)

@@ -7,7 +7,7 @@
     tools:context=".SplashScreen">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/splashActivityAppLogo"
         android:layout_width="228dp"
         android:layout_height="194dp"
         android:layout_marginTop="100dp"
@@ -18,7 +18,7 @@
         android:contentDescription="@string/app_logo_text" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/splashActivityAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/application_name"
@@ -26,25 +26,25 @@
         android:textSize="35sp"
         android:fontFamily="@font/yeonsung_regular"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/splashActivityAppLogo"
+        app:layout_constraintStart_toStartOf="@+id/splashActivityAppLogo"
+        app:layout_constraintTop_toBottomOf="@+id/splashActivityAppLogo" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/splashActivityAppMotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_tagline"
+        android:text="@string/app_motto"
         android:textSize="20sp"
         android:fontFamily="@font/yatraone_regular"
         android:gravity="center"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="@+id/splashActivityAppName"
+        app:layout_constraintStart_toStartOf="@+id/splashActivityAppName"
+        app:layout_constraintTop_toBottomOf="@+id/splashActivityAppName" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/splashActivityAppDesigner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/designer"
@@ -54,6 +54,6 @@
         android:fontFamily="@font/lato_regular"
         android:textColor="@color/ascent_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        app:layout_constraintEnd_toEndOf="@+id/splashActivityAppMotto"
+        app:layout_constraintStart_toStartOf="@+id/splashActivityAppMotto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

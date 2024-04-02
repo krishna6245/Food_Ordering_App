@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:fontFamily="@font/yeonsung_regular"
-        android:text="@string/app_tagline"
+        android:text="@string/app_motto"
         android:textColor="@color/ascent_color"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/loginActivityAppName"

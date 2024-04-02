@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:fontFamily="@font/yeonsung_regular"
-        android:text="@string/app_tagline"
+        android:text="@string/app_motto"
         android:textColor="@color/ascent_color"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/signupActivityAppName"
@@ -173,7 +173,7 @@
         android:fontFamily="@font/lato_bold"
         android:elevation="10dp"
         android:shadowColor="@color/ascent_color"
-        android:text="Create Account"
+        android:text="Next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupActivityFacebookButton" />
