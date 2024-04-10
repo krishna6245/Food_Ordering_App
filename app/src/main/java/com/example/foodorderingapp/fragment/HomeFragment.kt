@@ -7,12 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.HomeFragmentImageAdapter
+import com.example.foodorderingapp.adapters.HomeFragmentPopularItemAdapter
 import com.example.foodorderingapp.databinding.FragmentHomeBinding
 import kotlin.math.abs
 
@@ -22,7 +25,12 @@ class HomeFragment : Fragment() {
     private lateinit var viewPager : ViewPager2
     private lateinit var handler: Handler
     private lateinit var imageList : ArrayList<Int>
-    private lateinit var adapter: HomeFragmentImageAdapter
+    private lateinit var imageAdapter: HomeFragmentImageAdapter
+
+//    private lateinit var popularItemAdapter: HomeFragmentPopularItemAdapter
+//    private lateinit var foodNames : List<String>
+//    private lateinit var foodImages : List<Int>
+//    private lateinit var foodPrices : List<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +51,10 @@ class HomeFragment : Fragment() {
                 handler.postDelayed(runnable,2000)
             }
         })
+
+        binding.homeFragmentViewMenu.setOnClickListener{
+            Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
+        }
 
         return binding.root
     }
@@ -70,7 +82,6 @@ class HomeFragment : Fragment() {
         viewPager = binding.homeFragmentImageScrollList
         handler = Handler(Looper.myLooper()!!)
         imageList = ArrayList()
-
         imageList.add(R.drawable.dummy_image)
         imageList.add(R.drawable.dummy_image_1)
         imageList.add(R.drawable.dummy_image)
@@ -80,14 +91,24 @@ class HomeFragment : Fragment() {
         imageList.add(R.drawable.dummy_image)
         imageList.add(R.drawable.dummy_image_1)
 
+        imageAdapter = HomeFragmentImageAdapter(imageList,viewPager)
 
-        adapter = HomeFragmentImageAdapter(imageList,viewPager)
-
-        viewPager.adapter = adapter
+        viewPager.adapter = imageAdapter
         viewPager.offscreenPageLimit=5
         viewPager.clipToPadding=false
         viewPager.clipChildren=false
         viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+
+        val foodNames = listOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
+        val foodPrices = listOf(100,70,150,60,75,80,40,60)
+        val a:Int = R.drawable.dummy_image
+        val b:Int = R.drawable.dummy_image_1
+        val foodImages = listOf(a,b,a,b,a,b,a,b)
+
+        val popularItemAdapter = HomeFragmentPopularItemAdapter(foodNames,foodImages,foodPrices)
+        binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
+        binding.homeFragmentPopularItemList.adapter = popularItemAdapter
     }
 
 }

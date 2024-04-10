@@ -1,27 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/homeFragmentImageScrollList"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="30dp"
+        android:paddingStart="80dp"
+        android:paddingEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/yeonsung_regular"
+        android:gravity="center"
+        android:text="Popular"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeFragmentImageScrollList" />
+
+    <TextView
+        android:id="@+id/homeFragmentViewMenu"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:clickable="true"
+        android:background="@drawable/custom_editview"
+        android:text="View Menu"
+        android:textSize="12sp"
+        android:textColor="@color/ascent_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeFragmentImageScrollList" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeFragmentPopularItemList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/homeFragmentImageScrollList"
-            android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="30dp"
-            android:paddingStart="80dp"
-            android:paddingEnd="80dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+        android:foregroundGravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

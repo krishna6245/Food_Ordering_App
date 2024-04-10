@@ -1,9 +1,11 @@
 package com.example.foodorderingapp.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.foodorderingapp.R
@@ -26,7 +28,6 @@ class HomeFragmentImageAdapter (private val imageList : ArrayList<Int>, private 
 
     override fun onBindViewHolder(holder: HomeFragmentImageViewHolder, position: Int) {
         holder.imageView.setImageResource(imageList[position])
-
         if(position == imageList.size - 1){
             viewPager.post(runnable)
         }
@@ -35,8 +36,6 @@ class HomeFragmentImageAdapter (private val imageList : ArrayList<Int>, private 
     private val runnable = Runnable {
         imageList.addAll(imageList)
         notifyDataSetChanged()
-
-
     }
 
 }
