@@ -15,6 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/main_activity_bottom_navigation_menu" />
 
+
+
     <TextView
         android:id="@+id/mainActivityTittleText"
         android:layout_width="wrap_content"
