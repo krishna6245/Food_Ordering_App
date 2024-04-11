@@ -23,7 +23,7 @@
 
 
             <ImageView
-                android:id="@+id/popularItemImage"
+                android:id="@+id/menuItemImage"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="10dp"
@@ -36,43 +36,45 @@
                 tools:srcCompat="@drawable/profile_icon" />
 
             <TextView
-                android:id="@+id/popularItemName"
+                android:id="@+id/menuItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/yeonsung_regular"
+                android:fontFamily="@font/lato_bold"
                 android:text="Name"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/popularItemImage"
+                app:layout_constraintStart_toEndOf="@+id/menuItemImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/popularItemPrice"
+                android:id="@+id/menuItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="-80dp"
+                android:layout_marginBottom="15dp"
                 android:text="Rs.0"
+                android:fontFamily="@font/lato_bold"
                 android:textColor="@color/ascent_color"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/popularItemCartButton"
+                android:id="@+id/menuItemCartButton"
                 android:layout_width="55dp"
                 android:layout_height="15dp"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/custom_button"
                 android:clickable="true"
                 android:gravity="center"
+                android:fontFamily="@font/lato_bold"
                 android:text="Add To Cart"
                 android:textColor="@color/white"
                 android:textSize="6sp"
-                app:layout_constraintEnd_toEndOf="@id/popularItemPrice"
-                app:layout_constraintStart_toStartOf="@+id/popularItemPrice"
-                app:layout_constraintTop_toBottomOf="@id/popularItemPrice" />
+                app:layout_constraintStart_toStartOf="@+id/menuItemPrice"
+                app:layout_constraintTop_toBottomOf="@id/menuItemPrice" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

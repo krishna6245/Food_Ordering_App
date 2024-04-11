@@ -15,7 +15,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.HomeFragmentImageAdapter
-import com.example.foodorderingapp.adapters.HomeFragmentPopularItemAdapter
+import com.example.foodorderingapp.adapters.MenuItemAdapter
 import com.example.foodorderingapp.databinding.FragmentHomeBinding
 import kotlin.math.abs
 
@@ -27,10 +27,10 @@ class HomeFragment : Fragment() {
     private lateinit var imageList : ArrayList<Int>
     private lateinit var imageAdapter: HomeFragmentImageAdapter
 
-//    private lateinit var popularItemAdapter: HomeFragmentPopularItemAdapter
-//    private lateinit var foodNames : List<String>
-//    private lateinit var foodImages : List<Int>
-//    private lateinit var foodPrices : List<Int>
+    private lateinit var popularItemAdapter: MenuItemAdapter
+    private lateinit var foodNames : List<String>
+    private lateinit var foodImages : List<Int>
+    private lateinit var foodPrices : List<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable,2000)
+                handler.postDelayed(runnable,5000)
             }
         })
 
@@ -57,12 +57,6 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        handler.postDelayed(runnable,2000)
     }
 
     private val runnable = Runnable{
@@ -100,13 +94,13 @@ class HomeFragment : Fragment() {
         viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
 
-        val foodNames = listOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        val foodPrices = listOf(100,70,150,60,75,80,40,60)
+        foodNames = listOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
+        foodPrices = listOf(100,70,150,60,75,80,40,60)
         val a:Int = R.drawable.dummy_image
         val b:Int = R.drawable.dummy_image_1
-        val foodImages = listOf(a,b,a,b,a,b,a,b)
+        foodImages = listOf(a,b,a,b,a,b,a,b)
 
-        val popularItemAdapter = HomeFragmentPopularItemAdapter(foodNames,foodImages,foodPrices)
+        popularItemAdapter = MenuItemAdapter(foodNames,foodImages,foodPrices)
         binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.homeFragmentPopularItemList.adapter = popularItemAdapter
     }
