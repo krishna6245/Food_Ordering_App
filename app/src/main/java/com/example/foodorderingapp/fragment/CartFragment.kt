@@ -28,6 +28,7 @@ class CartFragment : Fragment() {
     ): View? {
         binding = FragmentCartBinding.inflate(inflater,container,false)
         init()
+
         return binding.root
     }
     private fun init(){

@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/mainActivityTittleText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
         android:layout_marginTop="46dp"
         android:layout_marginStart="21dp"
         android:textSize="24sp"
@@ -31,9 +31,10 @@
 
     <ImageView
         android:id="@+id/mainActivityNotificationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="25dp"
+        app:tint="@color/ascent_color"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@+id/mainActivityTittleText"

@@ -56,6 +56,11 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
         }
 
+        binding.homeFragmentViewMenu.setOnClickListener{
+            val bottomSheetDialog = MenuBottomSheetFragment()
+            bottomSheetDialog.show(parentFragmentManager,"Tag")
+        }
+
         return binding.root
     }
 
