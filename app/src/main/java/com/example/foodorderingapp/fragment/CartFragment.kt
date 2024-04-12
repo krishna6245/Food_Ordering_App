@@ -12,11 +12,11 @@ import com.example.foodorderingapp.databinding.FragmentCartBinding
 
 class CartFragment : Fragment() {
     private lateinit var binding:FragmentCartBinding
-    private lateinit var cartItemAdapter: CartFragmentMenuItemAdapter
-    private lateinit var cartItemFoodNames : MutableList<String>
-    private lateinit var cartItemFoodImages : MutableList<Int>
-    private lateinit var cartItemFoodPrices : MutableList<Int>
-    private lateinit var cartItemFoodQuantities : MutableList<Int>
+    private lateinit var cartFragmentAdapter: CartFragmentMenuItemAdapter
+    private lateinit var cartFragmentFoodNames : MutableList<String>
+    private lateinit var cartFragmentFoodImages : MutableList<Int>
+    private lateinit var cartFragmentFoodPrices : MutableList<Int>
+    private lateinit var cartFragmentFoodQuantities : MutableList<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +36,17 @@ class CartFragment : Fragment() {
     }
 
     private fun setLists(){
-        cartItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        cartItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
+        cartFragmentFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
+        cartFragmentFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
         val a:Int = R.drawable.dummy_image
         val b:Int = R.drawable.dummy_image_1
-        cartItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
-        cartItemFoodQuantities = mutableListOf(1,2,3,10,5,2,8,5)
+        cartFragmentFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
+        cartFragmentFoodQuantities = mutableListOf(1,2,3,10,5,2,8,5)
     }
     private fun setAdapters(){
-        cartItemAdapter = CartFragmentMenuItemAdapter(cartItemFoodNames,cartItemFoodImages,cartItemFoodPrices,cartItemFoodQuantities)
+        cartFragmentAdapter = CartFragmentMenuItemAdapter(cartFragmentFoodNames,cartFragmentFoodImages,cartFragmentFoodPrices,cartFragmentFoodQuantities)
         binding.cartFragmentCartItemList.layoutManager = LinearLayoutManager(requireContext())
-        binding.cartFragmentCartItemList.adapter = cartItemAdapter
+        binding.cartFragmentCartItemList.adapter = cartFragmentAdapter
     }
 
 

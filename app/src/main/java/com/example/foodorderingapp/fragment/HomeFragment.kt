@@ -22,15 +22,15 @@ import kotlin.math.abs
 class HomeFragment : Fragment() {
     private lateinit var binding:FragmentHomeBinding
 
-    private lateinit var viewPager : ViewPager2
-    private lateinit var handler: Handler
-    private lateinit var imageList : ArrayList<Int>
-    private lateinit var imageAdapter: HomeFragmentImageAdapter
+    private lateinit var homeFragmentViewPager : ViewPager2
+    private lateinit var homeFragmentHandler: Handler
+    private lateinit var homeFragmentImageList : ArrayList<Int>
+    private lateinit var homeFragmentImageAdapter: HomeFragmentImageAdapter
 
-    private lateinit var popularItemAdapter: MenuItemAdapter
-    private lateinit var foodNames : List<String>
-    private lateinit var foodImages : List<Int>
-    private lateinit var foodPrices : List<Int>
+    private lateinit var homeFragmentPopularItemAdapter: MenuItemAdapter
+    private lateinit var homeFragmentFoodNames : List<String>
+    private lateinit var homeFragmentFoodImages : List<Int>
+    private lateinit var homeFragmentFoodPrices : List<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,40 +46,40 @@ class HomeFragment : Fragment() {
     }
 
     private fun setLists(){
-        viewPager = binding.homeFragmentImageScrollList
-        handler = Handler(Looper.myLooper()!!)
-        imageList = ArrayList()
-        imageList.add(R.drawable.dummy_image)
-        imageList.add(R.drawable.dummy_image_1)
-        imageList.add(R.drawable.dummy_image)
-        imageList.add(R.drawable.dummy_image_1)
-        imageList.add(R.drawable.dummy_image)
-        imageList.add(R.drawable.dummy_image_1)
-        imageList.add(R.drawable.dummy_image)
-        imageList.add(R.drawable.dummy_image_1)
+        homeFragmentViewPager = binding.homeFragmentImageScrollList
+        homeFragmentHandler = Handler(Looper.myLooper()!!)
+        homeFragmentImageList = ArrayList()
+        homeFragmentImageList.add(R.drawable.dummy_image)
+        homeFragmentImageList.add(R.drawable.dummy_image_1)
+        homeFragmentImageList.add(R.drawable.dummy_image)
+        homeFragmentImageList.add(R.drawable.dummy_image_1)
+        homeFragmentImageList.add(R.drawable.dummy_image)
+        homeFragmentImageList.add(R.drawable.dummy_image_1)
+        homeFragmentImageList.add(R.drawable.dummy_image)
+        homeFragmentImageList.add(R.drawable.dummy_image_1)
 
-        imageAdapter = HomeFragmentImageAdapter(imageList,viewPager)
+        homeFragmentImageAdapter = HomeFragmentImageAdapter(homeFragmentImageList,homeFragmentViewPager)
 
-        viewPager.adapter = imageAdapter
-        viewPager.offscreenPageLimit=5
-        viewPager.clipToPadding=false
-        viewPager.clipChildren=false
-        viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        homeFragmentViewPager.adapter = homeFragmentImageAdapter
+        homeFragmentViewPager.offscreenPageLimit=5
+        homeFragmentViewPager.clipToPadding=false
+        homeFragmentViewPager.clipChildren=false
+        homeFragmentViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
 
-        foodNames = listOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        foodPrices = listOf(100,70,150,60,75,80,40,60)
+        homeFragmentFoodNames = listOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
+        homeFragmentFoodPrices = listOf(100,70,150,60,75,80,40,60)
         val a:Int = R.drawable.dummy_image
         val b:Int = R.drawable.dummy_image_1
-        foodImages = listOf(a,b,a,b,a,b,a,b)
+        homeFragmentFoodImages = listOf(a,b,a,b,a,b,a,b)
     }
     private fun setAdapters(){
-        popularItemAdapter = MenuItemAdapter(foodNames,foodImages,foodPrices)
+        homeFragmentPopularItemAdapter = MenuItemAdapter(homeFragmentFoodNames,homeFragmentFoodImages,homeFragmentFoodPrices)
         binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
-        binding.homeFragmentPopularItemList.adapter = popularItemAdapter
+        binding.homeFragmentPopularItemList.adapter = homeFragmentPopularItemAdapter
     }
     private val runnable = Runnable{
-        viewPager.currentItem = viewPager.currentItem+1;
+        homeFragmentViewPager.currentItem = homeFragmentViewPager.currentItem+1;
     }
     private fun setTransformers(){
         val transformer = CompositePageTransformer()
@@ -89,14 +89,14 @@ class HomeFragment : Fragment() {
             page.scaleY = 1f - r * 0.2f
         }
 
-        viewPager.setPageTransformer(transformer)
+        homeFragmentViewPager.setPageTransformer(transformer)
     }
     private fun setListeners(){
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        homeFragmentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable,5000)
+                homeFragmentHandler.removeCallbacks(runnable)
+                homeFragmentHandler.postDelayed(runnable,5000)
             }
         })
 

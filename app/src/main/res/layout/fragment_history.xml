@@ -1,14 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HistoryFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/historyFragmentRecentBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        android:text="Recent Buy"
+        android:fontFamily="@font/yeonsung_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-</FrameLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="353dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="10dp"
+        android:elevation="20dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/historyFragmentRecentBuy">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/historyFragmentRecentBuyFoodImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/custom_editview"
+                android:contentDescription="Food Image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/dummy_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/historyFragmentRecentBuyFoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/yatraone_regular"
+                android:text="Insha Allah"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/historyFragmentRecentBuyFoodImage"
+                app:layout_constraintTop_toTopOf="@+id/historyFragmentRecentBuyFoodImage" />
+
+            <TextView
+                android:id="@+id/historyFragmentRecentBuyRestaurant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:alpha="0.8"
+                android:fontFamily="@font/yatraone_regular"
+                android:singleLine="true"
+                android:text="Allah Hu Akbar"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/historyFragmentRecentBuyButton"
+                app:layout_constraintStart_toStartOf="@+id/historyFragmentRecentBuyFoodName"
+                app:layout_constraintTop_toBottomOf="@+id/historyFragmentRecentBuyFoodName" />
+
+            <TextView
+                android:id="@+id/historyFragmentRecentBuyFoodPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="@font/yatraone_regular"
+                android:text="Rs.72"
+                android:textColor="@color/ascent_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/historyFragmentRecentBuyFoodImage"
+                app:layout_constraintStart_toStartOf="@id/historyFragmentRecentBuyFoodName" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/historyFragmentRecentBuyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_button"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Buy\nAgain"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/historyFragmentPreviousBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous buy"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/yeonsung_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/historyFragmentPreviousBuyList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/historyFragmentPreviousBuy" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
