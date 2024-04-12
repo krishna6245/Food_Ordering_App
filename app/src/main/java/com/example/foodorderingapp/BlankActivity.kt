@@ -15,11 +15,14 @@ private lateinit var binding : ActivityBlankBinding
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         binding = ActivityBlankBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+    }
+
+    private fun init(){
         Handler().postDelayed({
             val intent= Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
         },0)
-
     }
 }

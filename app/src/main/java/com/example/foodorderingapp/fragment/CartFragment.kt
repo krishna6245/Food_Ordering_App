@@ -28,18 +28,22 @@ class CartFragment : Fragment() {
     ): View? {
         binding = FragmentCartBinding.inflate(inflater,container,false)
         init()
-
         return binding.root
     }
     private fun init(){
+        setLists()
+        setAdapters()
+    }
 
+    private fun setLists(){
         cartItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
         cartItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
         val a:Int = R.drawable.dummy_image
         val b:Int = R.drawable.dummy_image_1
         cartItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
         cartItemFoodQuantities = mutableListOf(1,2,3,10,5,2,8,5)
-
+    }
+    private fun setAdapters(){
         cartItemAdapter = CartFragmentMenuItemAdapter(cartItemFoodNames,cartItemFoodImages,cartItemFoodPrices,cartItemFoodQuantities)
         binding.cartFragmentCartItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.cartFragmentCartItemList.adapter = cartItemAdapter

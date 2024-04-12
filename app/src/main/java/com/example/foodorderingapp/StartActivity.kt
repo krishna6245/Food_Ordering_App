@@ -14,6 +14,12 @@ class StartActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         binding = ActivityStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+    }
+    private fun init(){
+        setListeners()
+    }
+    private fun setListeners(){
         binding.startActivityNextButton.setOnClickListener{
             Handler().postDelayed({
                 val intent = Intent(this,LoginActivity::class.java)

@@ -42,42 +42,10 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
         init()
-        setUpTransformer()
-
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable,5000)
-            }
-        })
-
-        binding.homeFragmentViewMenu.setOnClickListener{
-            Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
-        }
-
-        binding.homeFragmentViewMenu.setOnClickListener{
-            val bottomSheetDialog = MenuBottomSheetFragment()
-            bottomSheetDialog.show(parentFragmentManager,"Tag")
-        }
-
         return binding.root
     }
 
-    private val runnable = Runnable{
-        viewPager.currentItem = viewPager.currentItem+1;
-    }
-    private fun setUpTransformer(){
-        val transformer = CompositePageTransformer()
-        transformer.addTransformer(MarginPageTransformer(40))
-        transformer.addTransformer{page , position->
-            val r=abs(position)
-            page.scaleY = 1f - r * 0.2f
-        }
-
-        viewPager.setPageTransformer(transformer)
-    }
-    private fun init(){
+    private fun setLists(){
         viewPager = binding.homeFragmentImageScrollList
         handler = Handler(Looper.myLooper()!!)
         imageList = ArrayList()
@@ -104,10 +72,48 @@ class HomeFragment : Fragment() {
         val a:Int = R.drawable.dummy_image
         val b:Int = R.drawable.dummy_image_1
         foodImages = listOf(a,b,a,b,a,b,a,b)
-
+    }
+    private fun setAdapters(){
         popularItemAdapter = MenuItemAdapter(foodNames,foodImages,foodPrices)
         binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.homeFragmentPopularItemList.adapter = popularItemAdapter
+    }
+    private val runnable = Runnable{
+        viewPager.currentItem = viewPager.currentItem+1;
+    }
+    private fun setTransformers(){
+        val transformer = CompositePageTransformer()
+        transformer.addTransformer(MarginPageTransformer(40))
+        transformer.addTransformer{page , position->
+            val r=abs(position)
+            page.scaleY = 1f - r * 0.2f
+        }
+
+        viewPager.setPageTransformer(transformer)
+    }
+    private fun setListeners(){
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable,5000)
+            }
+        })
+
+        binding.homeFragmentViewMenu.setOnClickListener{
+            Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
+        }
+
+        binding.homeFragmentViewMenu.setOnClickListener{
+            val bottomSheetDialog = MenuBottomSheetFragment()
+            bottomSheetDialog.show(parentFragmentManager,"Tag")
+        }
+    }
+    private fun init(){
+        setLists()
+        setAdapters()
+        setTransformers()
+        setListeners()
     }
 
 }

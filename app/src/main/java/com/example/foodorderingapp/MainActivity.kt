@@ -12,8 +12,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+    }
 
-//        var navController = findNavController(binding.mainActivityFragmentContainer.id)
+    private fun init(){
+        setLayout()
+    }
+
+    private fun setLayout(){
         binding.mainActivityBottomNavigation.setupWithNavController(findNavController(R.id.mainActivityFragmentContainer))
     }
 }

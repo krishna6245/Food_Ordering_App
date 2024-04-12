@@ -30,20 +30,38 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentSearchBinding.inflate(inflater,container,false)
-
         init()
-
         return binding.root
     }
 
-    private fun setAdapter(){
+    private fun init(){
+        setLists()
+        setAdapters()
+        setListeners()
+    }
+    private fun setLists(){
+        searchItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
+        searchItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
+        val a:Int = R.drawable.dummy_image
+        val b:Int = R.drawable.dummy_image_1
+        searchItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
+
+        filteredFoodItemNames = mutableListOf()
+        filteredFoodItemImages = mutableListOf()
+        filteredFoodItemPrices = mutableListOf()
+
+        filteredFoodItemNames.addAll(searchItemFoodNames)
+        filteredFoodItemImages.addAll(searchItemFoodImages)
+        filteredFoodItemPrices.addAll(searchItemFoodPrices)
+
+    }
+    private fun setAdapters(){
         searchItemAdapter = MenuItemAdapter(filteredFoodItemNames,filteredFoodItemImages,filteredFoodItemPrices)
         binding.menuFragmentMenuItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuFragmentMenuItemList.adapter = searchItemAdapter
     }
-    private fun setSearchView(){
+    private fun setListeners(){
 
         binding.menuFragmentSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -71,26 +89,6 @@ class SearchFragment : Fragment() {
             }
         }
         searchItemAdapter.notifyDataSetChanged()
-    }
-    private fun init(){
-
-        searchItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        searchItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
-        val a:Int = R.drawable.dummy_image
-        val b:Int = R.drawable.dummy_image_1
-        searchItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
-
-        filteredFoodItemNames = mutableListOf()
-        filteredFoodItemImages = mutableListOf()
-        filteredFoodItemPrices = mutableListOf()
-
-        filteredFoodItemNames.addAll(searchItemFoodNames)
-        filteredFoodItemImages.addAll(searchItemFoodImages)
-        filteredFoodItemPrices.addAll(searchItemFoodPrices)
-
-        setAdapter()
-        setSearchView()
-
     }
 
 }

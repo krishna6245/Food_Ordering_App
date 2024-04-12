@@ -10,15 +10,24 @@ import com.example.foodorderingapp.databinding.ActivitySelectLocationBinding
 class SelectLocationActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySelectLocationBinding
+    private lateinit var locationList: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+    }
 
-        val locationList = arrayOf("Agra","Firozabad","Mathura","Hathras","Tundla","Samshabad","Aligarh","Shikohabad","Mainpuri")
+    private fun init(){
+        setAdapters()
+        setListeners()
+    }
+    private fun setAdapters(){
+        locationList = mutableListOf("Agra","Firozabad","Mathura","Hathras","Tundla","Samshabad","Aligarh","Shikohabad","Mainpuri")
         val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,locationList)
         binding.selectLocationActivityLocationList.setAdapter(adapter)
-
+    }
+    private fun setListeners(){
         binding.selectLocationActivityCreateAccount.setOnClickListener{
             Handler().postDelayed({
                 val intent = Intent(this,MainActivity::class.java)
@@ -27,4 +36,5 @@ class SelectLocationActivity : AppCompatActivity() {
             },0)
         }
     }
+
 }

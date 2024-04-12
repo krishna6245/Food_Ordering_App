@@ -15,6 +15,14 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+    }
+
+    private fun init(){
+        setLayout()
+        setListeners()
+    }
+    private fun setLayout(){
         val source=binding.signupActivtyContinueText.text.toString()
         val spannableStringBuilder = SpannableStringBuilder(source)
         spannableStringBuilder.setSpan(
@@ -24,6 +32,8 @@ class SignupActivity : AppCompatActivity() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         binding.signupActivtyContinueText.text=spannableStringBuilder
+    }
+    private fun setListeners(){
         binding.signupActivitySignupText.setOnClickListener{
             Handler().postDelayed({
                 val intent= Intent(this,LoginActivity::class.java)
@@ -34,7 +44,7 @@ class SignupActivity : AppCompatActivity() {
         binding.signupActivityLoginButton.setOnClickListener{
             val email=binding.signupActivityEmail.text.toString()
             val password=binding.signupActivityPassword.text.toString()
-            if(true){//TODO
+            if(true){   //TODO
                 Handler().postDelayed({
                     val intent= Intent(this,SelectLocationActivity::class.java)
                     startActivity(intent)

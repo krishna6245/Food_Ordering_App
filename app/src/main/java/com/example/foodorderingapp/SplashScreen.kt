@@ -14,6 +14,9 @@ class SplashScreen : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init()
+    }
+    private fun init(){
         Handler().postDelayed({
             val intent= Intent(this,StartActivity::class.java)
             startActivity(intent)
