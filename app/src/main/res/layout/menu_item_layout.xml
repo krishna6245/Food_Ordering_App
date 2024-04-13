@@ -51,20 +51,19 @@
                 android:id="@+id/menuItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-80dp"
-                android:layout_marginBottom="15dp"
-                android:text="Rs.0"
+                android:layout_marginStart="-90dp"
                 android:fontFamily="@font/lato_bold"
+                android:text="Rs.0"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/ascent_color"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/menuItemCartButton"
-                android:layout_width="55dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/custom_button"
                 android:clickable="true"
@@ -72,7 +71,11 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Add To Cart"
                 android:textColor="@color/white"
-                android:textSize="6sp"
+                android:textSize="8sp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintStart_toStartOf="@+id/menuItemPrice"
                 app:layout_constraintTop_toBottomOf="@id/menuItemPrice" />
         </androidx.constraintlayout.widget.ConstraintLayout>

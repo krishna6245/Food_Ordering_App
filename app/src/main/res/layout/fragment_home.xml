@@ -42,6 +42,7 @@
         android:clickable="true"
         android:background="@drawable/custom_editview"
         android:text="View Menu"
+        android:fontFamily="@font/yatraone_regular"
         android:textSize="16sp"
         android:textColor="@color/ascent_color"
         app:layout_constraintEnd_toEndOf="parent"
