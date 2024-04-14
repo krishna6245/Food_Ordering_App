@@ -3,6 +3,7 @@ package com.example.foodorderingapp.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +58,14 @@ class CartFragment : Fragment() {
             cartFragmentProccedButton.setOnClickListener {
                 Handler().postDelayed({
                     val intent = Intent(requireContext() , PlaceOrderActivity::class.java)
+
+                    Log.d("TTTT","${cartFragmentFoodImages.size}")
+                    intent.putExtra("hello" , 1)
+                    intent.putStringArrayListExtra("key_names", ArrayList(cartFragmentFoodNames))
+                    intent.putIntegerArrayListExtra("key_images", ArrayList(cartFragmentFoodImages))
+                    intent.putIntegerArrayListExtra("key_prices", ArrayList(cartFragmentFoodPrices))
+                    intent.putIntegerArrayListExtra("key_quantities", ArrayList(cartFragmentFoodQuantities))
+                    intent.putExtra("key_flag" , true)
                     startActivity(intent)
                 },0)
             }

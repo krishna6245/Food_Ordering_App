@@ -10,10 +10,12 @@
     android:paddingBottom="2dp"
     tools:context=".PlaceOrderActivity">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/orderActivityBackButton"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/back_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
