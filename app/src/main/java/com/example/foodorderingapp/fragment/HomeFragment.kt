@@ -17,6 +17,7 @@ import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.HomeFragmentImageAdapter
 import com.example.foodorderingapp.adapters.MenuItemAdapter
 import com.example.foodorderingapp.databinding.FragmentHomeBinding
+import com.example.foodorderingapp.fragment.bottomSheets.MenuBottomSheetFragment
 import kotlin.math.abs
 
 class HomeFragment : Fragment() {

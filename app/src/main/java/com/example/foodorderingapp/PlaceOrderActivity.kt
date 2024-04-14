@@ -3,6 +3,7 @@ package com.example.foodorderingapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.foodorderingapp.databinding.ActivityPlaceOrderBinding
+import com.example.foodorderingapp.fragment.bottomSheets.OrderPlacedBottomSheetFragment
 
 class PlaceOrderActivity : AppCompatActivity() {
 
@@ -21,9 +22,9 @@ class PlaceOrderActivity : AppCompatActivity() {
             orderActivityBackButton.setOnClickListener{
                 finish()
             }
-
             orderActivityProccedButton.setOnClickListener {
-
+                val orderPlacedBottomSheetDialog = OrderPlacedBottomSheetFragment()
+                orderPlacedBottomSheetDialog.show(supportFragmentManager,"Tag")
             }
         }
     }

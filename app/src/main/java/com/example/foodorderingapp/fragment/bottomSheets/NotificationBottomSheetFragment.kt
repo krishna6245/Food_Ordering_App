@@ -1,11 +1,10 @@
-package com.example.foodorderingapp.fragment
+package com.example.foodorderingapp.fragment.bottomSheets
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.NotificationItemAdapter
 import com.example.foodorderingapp.databinding.FragmentNotificationBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

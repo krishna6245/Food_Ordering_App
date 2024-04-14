@@ -1,4 +1,4 @@
-package com.example.foodorderingapp.fragment
+package com.example.foodorderingapp.fragment.bottomSheets
 
 import android.app.Dialog
 import android.os.Bundle
@@ -31,25 +31,31 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = FragmentMenuBottomSheetBinding.inflate(inflater,container,false)
         init()
-
-        binding.menuBottomSheetBackButton.setOnClickListener{
-            dismiss()
-        }
-
         return binding.root
     }
 
     private fun init(){
-
+        setLists()
+        setAdapters()
+        setListeners()
+    }
+    private fun setLists(){
         menuBottomSheetItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
         menuBottomSheetItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60,70,150,60,75,80,40,60,70,150,60,75,80,40,60)
         val a:Int = R.drawable.dummy_image
         val b:Int = R.drawable.dummy_image_1
         menuBottomSheetItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b,b,a,b,a,b,a,b,b,a,b,a,b,a,b)
-
+    }
+    private fun setAdapters(){
         menuBottomSheetAdapter = MenuItemAdapter(menuBottomSheetItemFoodNames,menuBottomSheetItemFoodImages,menuBottomSheetItemFoodPrices)
         binding.menuBottomSheetItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuBottomSheetItemList.adapter = menuBottomSheetAdapter
-
+    }
+    private fun setListeners(){
+        binding.apply {
+            menuBottomSheetBackButton.setOnClickListener{
+                dismiss()
+            }
+        }
     }
 }

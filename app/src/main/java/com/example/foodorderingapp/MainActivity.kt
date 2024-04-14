@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.foodorderingapp.databinding.ActivityMainBinding
-import com.example.foodorderingapp.fragment.NotificationBottomSheetFragment
+import com.example.foodorderingapp.fragment.bottomSheets.NotificationBottomSheetFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

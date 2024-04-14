@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="30dp"
+    tools:context=".fragment.bottomSheets.OrderPlacedBottomSheetFragment">
+
+    <TextView
+        android:id="@+id/orderPlacedBottomSheetConfirmationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yeonsung_regular"
+        android:textSize="30sp"
+        android:text="Congrats\nYour Order has been Placed"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/orderPlacedBottomSheetConfirmationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/order_placed_image"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderPlacedBottomSheetConfirmationText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/orderPlacedBottomSheetGoHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_white"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="Go Home"
+        android:textAllCaps="false"
+        android:textColor="@color/ascent_color"
+        android:textSize="20sp"
+        android:paddingStart="40dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="40dp"
+        android:paddingBottom="15dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintTop_toBottomOf="@id/orderPlacedBottomSheetConfirmationImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
