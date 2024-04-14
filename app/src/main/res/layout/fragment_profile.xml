@@ -9,6 +9,9 @@
 
     <LinearLayout
         android:id="@+id/profileFragmentNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -20,13 +23,10 @@
         android:paddingTop="15dp"
         android:paddingEnd="15dp"
         android:paddingBottom="15dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:textSize="20sp">
 
         <TextView
-            android:id="@+id/profileFragmentNameText"
+            android:id="@+id/orderActicityNameText"
             android:layout_width="85dp"
             android:layout_height="match_parent"
             android:fontFamily="@font/lato_bold"

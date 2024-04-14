@@ -22,10 +22,7 @@ class HistoryItemAdapter(private val names : MutableList<String>, private val im
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): HistoryItemAdapter.HistoryItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemAdapter.HistoryItemHolder {
         val view = HistoryItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return HistoryItemHolder(view)
     }
