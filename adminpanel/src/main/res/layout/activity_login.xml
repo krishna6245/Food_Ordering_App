@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/loginActivityAppLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/app_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loginActivityAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="@string/application_name"
+        android:textAllCaps="false"
+        android:textColor="@color/accent_color"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityAppLogo" />
+
+    <TextView
+        android:id="@+id/loginActivityAppMotto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="@string/app_motto"
+        android:textAllCaps="false"
+        android:textColor="@color/accent_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityAppName" />
+
+    <TextView
+        android:id="@+id/loginActivityAppLoginTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:gravity="center"
+        android:text="Login to Your\nAdmin Dashboard"
+        android:textColor="@color/accent_color"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityAppMotto" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/loginActivityEmailEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/custom_editview"
+        android:drawableStart="@drawable/email_icon"
+        android:drawablePadding="15dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:hint="Email or Phone Number"
+        android:inputType="text"
+        android:paddingStart="30dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityAppLoginTitleText" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/loginActivityPasswordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/custom_editview"
+        android:drawableStart="@drawable/password_icon"
+        android:drawablePadding="15dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:hint="Password"
+        android:paddingStart="30dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityEmailEditText" />
+
+    <TextView
+        android:id="@+id/loginActivityContinueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/yeonsung_regular"
+        android:gravity="center"
+        android:text="Or\nContinue With"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityPasswordEditText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginActivityGoogleButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_white"
+        android:text="Google"
+        android:fontFamily="@font/lato_regular"
+        android:textAllCaps="false"
+        android:drawableStart="@drawable/google_icon"
+        android:paddingStart="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/loginActivityFacebookButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityContinueText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginActivityFacebookButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_white"
+        android:text="Facebook"
+        android:drawableStart="@drawable/facebook_icon"
+        android:textAllCaps="false"
+        android:fontFamily="@font/lato_regular"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/loginActivityGoogleButton"
+        app:layout_constraintTop_toTopOf="@id/loginActivityGoogleButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginActivityLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:fontFamily="@font/lato_bold"
+        android:layout_marginTop="15dp"
+        android:paddingStart="60dp"
+        android:paddingEnd="60dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityGoogleButton"/>
+
+    <TextView
+        android:id="@+id/loginActivityNotHaveAccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:textColor="@color/accent_color"
+        android:text="Don't Have an Account?"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityLoginButton"/>
+
+    <TextView
+        android:id="@+id/loginActivityDesignedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_bold"
+        android:textSize="20sp"
+        android:textColor="@color/accent_color"
+        android:gravity="center"
+        android:text="Designed By:-\nKrishna Agrawal"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@color/ascent_color" />
+            android:textColor="@color/accent_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartFragmentCartItemList"

@@ -78,7 +78,7 @@
                 android:layout_marginBottom="2dp"
                 android:fontFamily="@font/yatraone_regular"
                 android:text="Rs.72"
-                android:textColor="@color/ascent_color"
+                android:textColor="@color/accent_color"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@id/historyFragmentRecentBuyFoodImage"
                 app:layout_constraintStart_toStartOf="@id/historyFragmentRecentBuyFoodName" />

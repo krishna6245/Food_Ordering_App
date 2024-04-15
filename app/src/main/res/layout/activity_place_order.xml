@@ -29,7 +29,7 @@
         android:fontFamily="@font/yeonsung_regular"
         android:text="Edit Personal Information"
         android:textAllCaps="false"
-        android:textColor="@color/ascent_color"
+        android:textColor="@color/accent_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -248,7 +248,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/lato_bold"
             android:text="Rs. 1000"
-            android:textColor="@color/ascent_color"
+            android:textColor="@color/accent_color"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -266,7 +266,7 @@
         android:paddingBottom="5dp"
         android:text="Place my Order"
         android:textAllCaps="false"
-        android:textColor="@color/ascent_color"
+        android:textColor="@color/accent_color"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

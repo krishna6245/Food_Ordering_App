@@ -39,7 +39,7 @@
         android:fontFamily="@font/yeonsung_regular"
         android:text="Go Home"
         android:textAllCaps="false"
-        android:textColor="@color/ascent_color"
+        android:textColor="@color/accent_color"
         android:textSize="20sp"
         android:paddingStart="40dp"
         android:paddingTop="15dp"

@@ -178,7 +178,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         android:textSize="20dp"
-        android:textColor="@color/ascent_color"
+        android:textColor="@color/accent_color"
         android:fontFamily="@font/yeonsung_regular"
         android:background="@drawable/custom_button_white"
         android:elevation="5dp"

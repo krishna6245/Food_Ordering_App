@@ -9,6 +9,5 @@
     <string name="login_title">Login to your Account</string>
     <string name="signup_title">Sign Up Here</string>
     <string name="app_permissions">To provide you with the best dining experience, we need your permission to access your device\'s location. By enabling location services, we can offer personalized restaurant recommendations, accurate delivery estimates, and ensure a seamless food delivery experience.</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

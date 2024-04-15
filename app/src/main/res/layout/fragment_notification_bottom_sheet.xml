@@ -25,7 +25,7 @@
         android:textSize="20sp"
         android:textAllCaps="false"
         android:fontFamily="@font/yatraone_regular"
-        android:textColor="@color/ascent_color"
+        android:textColor="@color/accent_color"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

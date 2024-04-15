@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,14 +9,14 @@
 
     <ImageView
         android:id="@+id/signupActivityAppLogo"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="75dp"
-        android:contentDescription="@string/app_logo_text"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/app_logo" />
 
     <TextView
         android:id="@+id/signupActivityAppName"
@@ -31,97 +32,138 @@
         app:layout_constraintTop_toBottomOf="@+id/signupActivityAppLogo" />
 
     <TextView
-        android:id="@+id/signupActivityAppTagline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:fontFamily="@font/yeonsung_regular"
-        android:text="@string/app_motto"
-        android:textColor="@color/accent_color"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityAppName"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityAppName"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityAppName" />
-
-    <TextView
         android:id="@+id/signupActivityLoginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/yatraone_regular"
-        android:text="@string/signup_title"
+        android:text="Sign Up Here For Your\nAdmin DashBoard"
+        android:gravity="center"
         android:textColor="@color/accent_color"
-        android:textSize="25sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/signupActivityAppLogo"
         app:layout_constraintStart_toStartOf="@+id/signupActivityAppLogo"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityAppTagline" />
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityAppName" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signupActivityLocationView"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:background="@drawable/custom_button_white"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:endIconDrawable="@drawable/down_arrow"
+        app:endIconTint="@color/black"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityLoginText">
+
+        <AutoCompleteTextView
+            android:id="@+id/signupActivityLocationList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="top"
+            android:hint="Choose Location:- "
+            android:inputType="none"
+            android:textColorHint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signupActivityName"
-        android:layout_width="325dp"
+        android:id="@+id/signupActivityOwnerName"
+        android:layout_width="0dp"
         android:layout_height="57dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:singleLine="true"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/custom_editview"
-        android:fontFamily="@font/yatraone_regular"
-        android:hint="Name"
         android:drawableStart="@drawable/name_icon"
-        android:drawablePadding="10dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
+        android:drawablePadding="15dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:hint="Owner Name"
+        android:paddingStart="20dp"
+        android:paddingEnd="15dp"
+        android:singleLine="true"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityLoginText"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityLoginText"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityLoginText" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityLocationView" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/signupActivityRestaurantName"
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/custom_editview"
+        android:drawableStart="@drawable/restaurant_icon"
+        android:drawablePadding="15dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:hint="Buisness Name"
+        android:paddingStart="20dp"
+        android:paddingEnd="15dp"
+        android:singleLine="true"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityOwnerName" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/signupActivityEmail"
-        android:layout_width="325dp"
+        android:layout_width="0dp"
         android:layout_height="57dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:singleLine="true"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/custom_editview"
+        android:drawableStart="@drawable/email_icon"
+        android:drawablePadding="15dp"
         android:fontFamily="@font/yatraone_regular"
         android:hint="Email or Phone Number"
-        android:drawableStart="@drawable/email_icon"
-        android:drawablePadding="10dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="15dp"
+        android:singleLine="true"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityName"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityName"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityName" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityRestaurantName" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/signupActivityPassword"
-        android:layout_width="325dp"
+        android:layout_width="0dp"
         android:layout_height="57dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:singleLine="true"
-        android:inputType="textPassword"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/custom_editview"
+        android:drawableStart="@drawable/password_icon"
+        android:drawablePadding="15dp"
         android:fontFamily="@font/yatraone_regular"
         android:hint="Password"
-        android:drawableStart="@drawable/password_icon"
-        android:drawablePadding="10dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
+        android:paddingEnd="15dp"
+        android:singleLine="true"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityEmail"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupActivityEmail" />
 
     <TextView
-        android:id="@+id/signupActivtyContinueText"
+        android:id="@+id/signupActivityContinueText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/yeonsung_regular"
         android:gravity="center_horizontal"
         android:text="Or\nContinue With"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityPassword"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupActivityPassword" />
 
 
@@ -140,9 +182,8 @@
         android:shadowColor="@color/accent_color"
         android:textAllCaps="false"
         app:layout_constraintEnd_toStartOf="@+id/signupActivityFacebookButton"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/signupActivtyContinueText" />
+        app:layout_constraintTop_toBottomOf="@id/signupActivityContinueText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signupActivityFacebookButton"
@@ -161,11 +202,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/signupActivityGoogleButton"
-        app:layout_constraintTop_toBottomOf="@id/signupActivtyContinueText" />
+        app:layout_constraintTop_toBottomOf="@id/signupActivityContinueText" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signupActivityLoginButton"
-        android:layout_width="157dp"
+        android:id="@+id/signupActivityCreateAccountButton"
+        android:layout_width="0dp"
         android:layout_height="57dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/custom_button"
@@ -173,24 +214,28 @@
         android:fontFamily="@font/lato_bold"
         android:elevation="10dp"
         android:shadowColor="@color/accent_color"
-        android:text="Next"
+        android:text="Create Account"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupActivityFacebookButton" />
 
     <TextView
-        android:id="@+id/signupActivitySignupText"
+        android:id="@+id/signupActivityAlreadyHaveAcountButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
+        android:focusable="true"
         android:fontFamily="@font/yatraone_regular"
         android:text="Already Have an Account?"
         android:textColor="@color/accent_color"
-        android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityLoginButton"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityLoginButton"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityLoginButton" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityCreateAccountButton" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
