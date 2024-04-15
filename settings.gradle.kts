@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Food Ordering App"
 include(":app")
- 
+include(":adminpanel")
