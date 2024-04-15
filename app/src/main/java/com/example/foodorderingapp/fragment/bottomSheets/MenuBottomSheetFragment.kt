@@ -47,7 +47,7 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
         menuBottomSheetItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b,b,a,b,a,b,a,b,b,a,b,a,b,a,b)
     }
     private fun setAdapters(){
-        menuBottomSheetAdapter = MenuItemAdapter(menuBottomSheetItemFoodNames,menuBottomSheetItemFoodImages,menuBottomSheetItemFoodPrices)
+        menuBottomSheetAdapter = MenuItemAdapter(menuBottomSheetItemFoodNames,menuBottomSheetItemFoodImages,menuBottomSheetItemFoodPrices,requireActivity())
         binding.menuBottomSheetItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuBottomSheetItemList.adapter = menuBottomSheetAdapter
     }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FoodDescriptionActivity">
+
+    <ImageView
+        android:id="@+id/foodDescriptionActivityBackButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:tint="#FEAD1D"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_arrow"/>
+
+    <TextView
+        android:id="@+id/foodDescriptionActivityFoodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Name"
+        android:textSize="35sp"
+        android:fontFamily="@font/yeonsung_regular"
+        android:textColor="@color/ascent_color"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionActivityBackButton" />
+
+    <ImageView
+        android:id="@+id/foodDescriptionActivityFoodImage"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/custom_editview"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionActivityFoodName"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/foodDescriptionActivityDescriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:- "
+        android:textSize="20sp"
+        android:fontFamily="@font/lato_bold"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@+id/foodDescriptionActivityFoodImage"
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionActivityFoodImage" />
+
+    <TextView
+        android:id="@+id/foodDescriptionActivityFoodDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Description"
+        android:textSize="15sp"
+        android:fontFamily="@font/lato_regular"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="@+id/foodDescriptionActivityDescriptionText"
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionActivityDescriptionText" />
+
+    <TextView
+        android:id="@+id/foodDescriptionActivityIngredientsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ingridients"
+        android:textSize="20sp"
+        android:fontFamily="@font/lato_bold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/foodDescriptionActivityFoodImage"
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionActivityFoodDescription" />
+
+    <TextView
+        android:id="@+id/foodDescriptionActivityFoodIngredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Ingridients"
+        android:textSize="15sp"
+        android:fontFamily="@font/lato_regular"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@+id/foodDescriptionActivityFoodImage"
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionActivityIngredientsText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/foodDescriptionActivityAddToCartButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:textAllCaps="false"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:fontFamily="@font/yeonsung_regular"
+        android:textSize="25sp"
+        android:text="Add to Cart"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

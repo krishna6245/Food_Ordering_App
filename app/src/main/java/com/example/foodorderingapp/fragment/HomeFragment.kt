@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
         homeFragmentFoodImages = listOf(a,b,a,b,a,b,a,b)
     }
     private fun setAdapters(){
-        homeFragmentPopularItemAdapter = MenuItemAdapter(homeFragmentFoodNames,homeFragmentFoodImages,homeFragmentFoodPrices)
+        homeFragmentPopularItemAdapter = MenuItemAdapter(homeFragmentFoodNames,homeFragmentFoodImages,homeFragmentFoodPrices,requireActivity())
         binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.homeFragmentPopularItemList.adapter = homeFragmentPopularItemAdapter
     }

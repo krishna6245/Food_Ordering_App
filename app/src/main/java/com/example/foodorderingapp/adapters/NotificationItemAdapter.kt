@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodorderingapp.R
-import com.example.foodorderingapp.databinding.NotificationItemBinding
+import com.example.foodorderingapp.databinding.NotificationItemLayoutBinding
 
 class NotificationItemAdapter(private val orderTypes : MutableList<Int>) : RecyclerView.Adapter<NotificationItemAdapter.NotificationItemHolder>(){
-    inner class NotificationItemHolder (private val binding : NotificationItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NotificationItemHolder (private val binding : NotificationItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int){
             var image = 0
             var text = ""
@@ -33,7 +33,7 @@ class NotificationItemAdapter(private val orderTypes : MutableList<Int>) : Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationItemHolder {
-        val view = NotificationItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = NotificationItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return NotificationItemHolder(view)
     }
 
