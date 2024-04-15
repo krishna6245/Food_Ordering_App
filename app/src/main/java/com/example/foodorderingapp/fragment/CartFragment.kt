@@ -11,12 +11,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodorderingapp.PlaceOrderActivity
 import com.example.foodorderingapp.R
-import com.example.foodorderingapp.adapters.CartFragmentMenuItemAdapter
+import com.example.foodorderingapp.adapters.CartItemAdapter
 import com.example.foodorderingapp.databinding.FragmentCartBinding
 
 class CartFragment : Fragment() {
     private lateinit var binding:FragmentCartBinding
-    private lateinit var cartFragmentAdapter: CartFragmentMenuItemAdapter
+    private lateinit var cartFragmentAdapter: CartItemAdapter
     private lateinit var cartFragmentFoodNames : MutableList<String>
     private lateinit var cartFragmentFoodImages : MutableList<Int>
     private lateinit var cartFragmentFoodPrices : MutableList<Int>
@@ -49,7 +49,7 @@ class CartFragment : Fragment() {
         cartFragmentFoodQuantities = mutableListOf(1,2,3,10,5,2,8,5)
     }
     private fun setAdapters(){
-        cartFragmentAdapter = CartFragmentMenuItemAdapter(cartFragmentFoodNames,cartFragmentFoodImages,cartFragmentFoodPrices,cartFragmentFoodQuantities)
+        cartFragmentAdapter = CartItemAdapter(cartFragmentFoodNames,cartFragmentFoodImages,cartFragmentFoodPrices,cartFragmentFoodQuantities,requireActivity())
         binding.cartFragmentCartItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.cartFragmentCartItemList.adapter = cartFragmentAdapter
     }

@@ -60,7 +60,7 @@ class HistoryFragment : Fragment() {
         historyFragmentFoodRestaurants.removeAt(0)
     }
     private fun setAdapters(){
-        historyFragmentAdapter = HistoryItemAdapter(historyFragmentFoodNames,historyFragmentFoodImages,historyFragmentFoodRestaurants,historyFragmentFoodPrices)
+        historyFragmentAdapter = HistoryItemAdapter(historyFragmentFoodNames,historyFragmentFoodImages,historyFragmentFoodRestaurants,historyFragmentFoodPrices,requireActivity())
         binding.historyFragmentPreviousBuyList.layoutManager = LinearLayoutManager(requireContext())
         binding.historyFragmentPreviousBuyList.adapter = historyFragmentAdapter
     }
