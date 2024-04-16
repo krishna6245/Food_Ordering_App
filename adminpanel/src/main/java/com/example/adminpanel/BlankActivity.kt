@@ -20,7 +20,7 @@ class BlankActivity : AppCompatActivity() {
     }
     private fun init(){
         Handler().postDelayed({
-            val intent = Intent(this , SplashScreen::class.java)
+            val intent = Intent(this , MainActivity::class.java)
             startActivity(intent)
             finish()
         },0)

@@ -4,16 +4,327 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#D1FF96"
     tools:context=".MainActivity">
 
+
+    <ImageView
+        android:id="@+id/mainActivityAppLogo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_logo" />
+
     <TextView
-        android:id="@+id/foodDescriptionActivityBackButton"
+        android:id="@+id/mainActivityAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="@string/application_name"
+        android:textColor="@color/accent_color"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mainActivityAppLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mainActivityAppLogo"
+        app:layout_constraintTop_toTopOf="@+id/mainActivityAppLogo" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityAppName">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/mainActivityPendingOrderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Pending\nOrder"
+                android:textColor="@color/accent_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/mainActivityPendingOrder"
+                app:layout_constraintEnd_toStartOf="@+id/mainActivityCompletedOrderText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mainActivityPendingOrderIcon" />
+
+            <TextView
+                android:id="@+id/mainActivityCompletedOrderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Completed\nOrder"
+                android:textColor="@color/accent_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/mainActivityCompletedOrder"
+                app:layout_constraintEnd_toStartOf="@+id/mainActivityTotalEarningText"
+                app:layout_constraintStart_toEndOf="@id/mainActivityPendingOrderText"
+                app:layout_constraintTop_toBottomOf="@+id/mainActivityCompletedOrderIcon" />
+
+            <TextView
+                android:id="@+id/mainActivityTotalEarningText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Total\nEarning"
+                android:textColor="@color/accent_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/mainActivityTotalEarning"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mainActivityCompletedOrderText"
+                app:layout_constraintTop_toBottomOf="@+id/mainActivityTotalEarningIcon" />
+
+            <ImageView
+                android:id="@+id/mainActivityPendingOrderIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/mainActivityPendingOrderText"
+                app:layout_constraintEnd_toEndOf="@+id/mainActivityPendingOrderText"
+                app:layout_constraintStart_toStartOf="@+id/mainActivityPendingOrderText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/info_icon"
+                app:tint="@color/accent_color" />
+
+            <ImageView
+                android:id="@+id/mainActivityCompletedOrderIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/mainActivityCompletedOrderText"
+                app:layout_constraintEnd_toEndOf="@+id/mainActivityCompletedOrderText"
+                app:layout_constraintStart_toStartOf="@+id/mainActivityCompletedOrderText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/check_icon"
+                app:tint="@color/accent_color" />
+
+            <ImageView
+                android:id="@+id/mainActivityTotalEarningIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/mainActivityTotalEarningText"
+                app:layout_constraintEnd_toEndOf="@+id/mainActivityTotalEarningText"
+                app:layout_constraintStart_toStartOf="@+id/mainActivityTotalEarningText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/dollar_icon" />
+
+            <TextView
+                android:id="@+id/mainActivityPendingOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/mainActivityPendingOrderText"
+                app:layout_constraintStart_toStartOf="@+id/mainActivityPendingOrderText"
+                app:layout_constraintTop_toBottomOf="@+id/mainActivityPendingOrderText" />
+
+            <TextView
+                android:id="@+id/mainActivityCompletedOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#FEAD1D"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/mainActivityCompletedOrderText"
+                app:layout_constraintStart_toStartOf="@+id/mainActivityCompletedOrderText"
+                app:layout_constraintTop_toBottomOf="@+id/mainActivityCompletedOrderText" />
+
+            <TextView
+                android:id="@+id/mainActivityTotalEarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Rs. 0"
+                android:textColor="@color/accent_color"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/mainActivityTotalEarningText"
+                app:layout_constraintStart_toStartOf="@+id/mainActivityTotalEarningText"
+                app:layout_constraintTop_toBottomOf="@+id/mainActivityTotalEarningText" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainActivityAddItemButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_view"
+        android:drawableTop="@drawable/add_icon"
+        android:drawableTint="#31D180"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="Add Food Item"
+        android:textAllCaps="false"
+        android:textColor="#31D180"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/mainActivityProfileButton"
+        app:layout_constraintEnd_toStartOf="@+id/mainActivityViewMenuButtom"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainActivityProfileButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_view"
+        android:drawableTop="@drawable/view_profile_icon"
+        android:drawableTint="#31D180"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="Profile"
+        android:textAllCaps="false"
+        android:textColor="#31D180"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/mainActivityOrderDispatchButton"
+        app:layout_constraintEnd_toStartOf="@+id/mainActivityCreateNewUserButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityAddItemButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainActivityCreateNewUserButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_view"
+        android:drawableTop="@drawable/add_new_user_icon"
+        android:drawableTint="#31D180"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="Create New User"
+        android:textAllCaps="false"
+        android:textColor="#31D180"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/mainActivityLogOutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mainActivityProfileButton"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityViewMenuButtom" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainActivityLogOutButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_view"
+        android:drawableTop="@drawable/exit_icon"
+        android:drawableTint="#C51F1F"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="Log Out"
+        android:textAllCaps="false"
+        android:textColor="#C51F1F"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mainActivityOrderDispatchButton"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityCreateNewUserButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainActivityOrderDispatchButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_view"
+        android:drawableTop="@drawable/shop_icon"
+        android:drawableTint="#FD8B1C"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="Order Dispatch"
+        android:textAllCaps="false"
+        android:textColor="#FD8B1C"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/mainActivityLogOutButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityProfileButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mainActivityViewMenuButtom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_view"
+        android:drawableTop="@drawable/view_icon"
+        android:drawableTint="#31D180"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:text="View Menu"
+        android:textAllCaps="false"
+        android:textColor="#31D180"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/mainActivityCreateNewUserButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mainActivityAddItemButton"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
