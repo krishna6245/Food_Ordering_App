@@ -11,6 +11,9 @@
         android:theme="@style/Theme.FoodOrderingApp"
         tools:targetApi="31">
         <activity
+            android:name=".ViewMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddFoodItemActivity"
             android:exported="false" />
         <activity

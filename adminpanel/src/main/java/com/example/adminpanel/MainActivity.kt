@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity , AddFoodItemActivity::class.java)
                 startActivity(intent)
             }
+            mainActivityViewMenuButtom.setOnClickListener {
+                val intent = Intent(this@MainActivity , ViewMenuActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
