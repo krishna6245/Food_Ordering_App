@@ -5,4 +5,6 @@
     <color name="accent_color">#1FC57A</color>
     <color name="gradient_start_color">#53E88B</color>
     <color name="gradient_end_color">#15BE77</color>
+    <color name="failure_color">#FF4B4B</color>
+    <color name="success_color">#4BFF5D</color>
 </resources>

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewMenuActivity">
+    tools:context=".PendingOrderActivity">
 
     <ImageView
-        android:id="@+id/viewMenuActivityBackButton"
+        android:id="@+id/pendingOrderActivityBackButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -19,27 +19,30 @@
         app:srcCompat="@drawable/back_arrow" />
 
     <TextView
-        android:id="@+id/viewMenuActivityAllItemText"
+        android:id="@+id/pendingOrderActivityTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="All Item"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/yeonsung_regular"
+        android:text="Pending Order"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewMenuActivityBackButton" />
+        app:layout_constraintTop_toTopOf="@+id/pendingOrderActivityBackButton" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewMenuActivityItemList"
+        android:id="@+id/pendingOrderActivityItemList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMenuActivityAllItemText" />
+        app:layout_constraintTop_toBottomOf="@+id/pendingOrderActivityTitleText" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

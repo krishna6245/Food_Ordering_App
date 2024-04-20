@@ -26,6 +26,26 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity , ViewMenuActivity::class.java)
                 startActivity(intent)
             }
+            mainActivityOrderDispatchButton.setOnClickListener {
+                val intent = Intent(this@MainActivity , OrderDispatchActivity::class.java)
+                startActivity(intent)
+            }
+            mainActivityProfileButton.setOnClickListener {
+                val intent = Intent(this@MainActivity,ProfileActivity::class.java)
+                startActivity(intent)
+            }
+            mainActivityCreateNewUserButton.setOnClickListener{
+                val intent = Intent(this@MainActivity,CreateNewUserAdminActivity::class.java)
+                startActivity(intent)
+            }
+            mainActivityPendingOrderIcon.setOnClickListener {
+                val intent = Intent(this@MainActivity,PendingOrderActivity::class.java)
+                startActivity(intent)
+            }
+            mainActivityPendingOrderText.setOnClickListener {
+                val intent = Intent(this@MainActivity,PendingOrderActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }

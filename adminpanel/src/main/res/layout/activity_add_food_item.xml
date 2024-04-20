@@ -14,7 +14,6 @@
         android:layout_marginTop="20dp"
         android:clickable="true"
         android:focusable="true"
-        app:tint="@color/accent_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back_arrow"/>
@@ -26,7 +25,6 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/yeonsung_regular"
         android:text="Add Item"
-        android:textColor="@color/accent_color"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

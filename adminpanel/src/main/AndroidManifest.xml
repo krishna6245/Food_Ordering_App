@@ -11,6 +11,18 @@
         android:theme="@style/Theme.FoodOrderingApp"
         tools:targetApi="31">
         <activity
+            android:name=".PendingOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateNewUserAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderDispatchActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewMenuActivity"
             android:exported="false" />
         <activity
