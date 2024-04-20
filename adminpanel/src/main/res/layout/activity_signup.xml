@@ -93,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signupActivityLocationView" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signupActivityRestaurantName"
+        android:id="@+id/signupActivityBusinessName"
         android:layout_width="0dp"
         android:layout_height="57dp"
         android:layout_marginStart="20dp"
@@ -123,14 +123,14 @@
         android:drawableStart="@drawable/email_icon"
         android:drawablePadding="15dp"
         android:fontFamily="@font/yatraone_regular"
-        android:hint="Email or Phone Number"
+        android:hint="Email"
         android:paddingStart="20dp"
         android:paddingEnd="15dp"
         android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityRestaurantName" />
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityBusinessName" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/signupActivityPassword"
