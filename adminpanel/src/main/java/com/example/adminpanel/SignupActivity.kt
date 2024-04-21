@@ -71,6 +71,13 @@ class SignupActivity : AppCompatActivity() {
             getUserData()
 
             if(validateUserData()){
+
+                location.trim()
+                ownerName.trim()
+                businessName.trim()
+                email.trim()
+                password.trim()
+
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
 
                     if(task.isSuccessful){

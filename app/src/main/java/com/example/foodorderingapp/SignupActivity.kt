@@ -72,6 +72,10 @@ class SignupActivity : AppCompatActivity() {
             getUserData()
             if(validateUserData()){
 
+                name.trim()
+                email.trim()
+                password.trim()
+
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
                     if(task.isSuccessful){
                         val userId = auth.currentUser!!.uid

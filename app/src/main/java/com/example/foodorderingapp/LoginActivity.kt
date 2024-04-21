@@ -8,10 +8,19 @@ import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.util.Patterns
 import android.widget.EditText
+import android.widget.Toast
 import com.example.foodorderingapp.databinding.ActivityLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database : DatabaseReference
 
     private lateinit var email : String
     private lateinit var password : String
@@ -44,6 +53,9 @@ class LoginActivity : AppCompatActivity() {
     private fun initializeUiElements(){
         emailEditText = binding.loginActivityEmail
         passwordEditText = binding.loginActivityPassword
+
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database.getReference("food ordering app")
     }
     private fun setListeners(){
         binding.loginActivitySignupText.setOnClickListener{
@@ -54,11 +66,38 @@ class LoginActivity : AppCompatActivity() {
         binding.loginActivityLoginButton.setOnClickListener{
             getUserData()
 
-            if(validate()){
-                createUser()
-                val intent=Intent(this,MainActivity::class.java)
-                startActivity(intent)
-                finish()
+            if(validateUserData()){
+                email.trim()
+                password.trim()
+
+                auth.signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener {task ->
+                        if(task.isSuccessful){
+                            val userId = auth.currentUser
+                            val intent=Intent(this,MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                        }
+                    }
+                    .addOnFailureListener {exception ->
+                        if (exception is FirebaseAuthInvalidCredentialsException) {
+                            val error = exception.errorCode
+
+                            if (error == "ERROR_USER_NOT_FOUND") {
+                                emailEditText.error = "Email Not Found!!"
+                                emailEditText.requestFocus()
+                            }
+                            if (error == "ERROR_WRONG_PASSWORD") {
+                                passwordEditText.error = "Incorrect Password"
+                                passwordEditText.requestFocus()
+                            }
+                            Toast.makeText(
+                                applicationContext,
+                                "Failed to Sign In. Try Again!!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
             }
         }
     }
@@ -66,10 +105,11 @@ class LoginActivity : AppCompatActivity() {
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
     }
-    private fun validate() : Boolean{
+    private fun validateUserData() : Boolean{
 
         // Checks on Email
         if (email.isEmpty()){
+
             emailEditText.error = "Email is empty!!"
             emailEditText.requestFocus()
             return false
@@ -93,8 +133,5 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
         return true
-    }
-    private fun createUser(){
-
     }
 }
