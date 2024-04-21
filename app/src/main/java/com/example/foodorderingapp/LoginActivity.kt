@@ -3,6 +3,7 @@ package com.example.foodorderingapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
@@ -40,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         setListeners()
     }
     private fun setLayout(){
-        val source=binding.loginActivtyContinueText.text.toString()
+        val source=binding.loginActivityContinueText.text.toString()
         val spannableStringBuilder = SpannableStringBuilder(source)
         spannableStringBuilder.setSpan(
             AbsoluteSizeSpan(40),
@@ -48,11 +49,11 @@ class LoginActivity : AppCompatActivity() {
             3,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.loginActivtyContinueText.text=spannableStringBuilder
+        binding.loginActivityContinueText.text=spannableStringBuilder
     }
     private fun initializeUiElements(){
         emailEditText = binding.loginActivityEmail
-        passwordEditText = binding.loginActivityPassword
+        passwordEditText = binding.loginActivityPasswordEditText
 
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.getReference("food ordering app")
@@ -98,6 +99,16 @@ class LoginActivity : AppCompatActivity() {
                             ).show()
                         }
                     }
+            }
+        }
+        binding.loginActivityShowPasswordButton.setOnClickListener{
+            if(binding.loginActivityPasswordEditText.inputType != InputType.TYPE_CLASS_TEXT){
+                binding.loginActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT
+                binding.loginActivityShowPasswordButton.setImageResource(R.drawable.password_shown_icon)
+            }
+            else{
+                binding.loginActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.loginActivityShowPasswordButton.setImageResource(R.drawable.password_hidden_icon)
             }
         }
     }

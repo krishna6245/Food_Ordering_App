@@ -59,43 +59,81 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/loginActivityEmail"
-        android:layout_width="325dp"
+        android:layout_width="0dp"
         android:layout_height="57dp"
         android:layout_marginTop="10dp"
-        android:singleLine="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/custom_editview"
-        android:fontFamily="@font/yatraone_regular"
-        android:hint="Email or Phone Number"
         android:drawableStart="@drawable/email_icon"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/yatraone_regular"
+        android:hint="Email or Phone Number"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
+        android:singleLine="true"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/loginActivityLoginText"
-        app:layout_constraintStart_toStartOf="@+id/loginActivityLoginText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginActivityLoginText" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/loginActivityPassword"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="10dp"
-        android:singleLine="true"
-        android:inputType="textPassword"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loginActivityPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/custom_editview"
-        android:fontFamily="@font/yatraone_regular"
-        android:hint="Password"
-        android:drawableStart="@drawable/password_icon"
-        android:drawablePadding="10dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/loginActivityEmail"
-        app:layout_constraintStart_toStartOf="@+id/loginActivityEmail"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivityEmail" />
+        android:paddingTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginActivityEmail">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/loginActivityPasswordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/white"
+            android:drawableStart="@drawable/password_icon"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/yatraone_regular"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingEnd="5dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/loginActivityShowPasswordButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/loginActivityPasswordEditText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/password_hidden_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/loginActivtyContinueText"
+        android:id="@+id/loginActivityContinueText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -103,9 +141,9 @@
         android:gravity="center_horizontal"
         android:text="Or\nContinue With"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/loginActivityPassword"
-        app:layout_constraintStart_toStartOf="@+id/loginActivityPassword"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivityPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/loginActivityPasswordLayout"
+        app:layout_constraintStart_toStartOf="@+id/loginActivityPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/loginActivityPasswordLayout" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -125,7 +163,7 @@
         app:layout_constraintEnd_toStartOf="@+id/loginActivityFacebookButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginActivtyContinueText" />
+        app:layout_constraintTop_toBottomOf="@id/loginActivityContinueText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginActivityFacebookButton"
@@ -144,7 +182,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/loginActivityGoogleButton"
-        app:layout_constraintTop_toBottomOf="@id/loginActivtyContinueText" />
+        app:layout_constraintTop_toBottomOf="@id/loginActivityContinueText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginActivityLoginButton"

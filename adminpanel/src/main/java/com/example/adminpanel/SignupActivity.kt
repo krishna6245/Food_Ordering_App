@@ -3,6 +3,7 @@ package com.example.adminpanel
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import com.example.adminpanel.databinding.ActivitySignupBinding
 import android.widget.ArrayAdapter
@@ -29,12 +30,14 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var businessNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var confirmPasswordEditText: EditText
     private lateinit var locationAutoCompleteTextView: AutoCompleteTextView
 
     private lateinit var ownerName : String
     private lateinit var businessName : String
     private lateinit var email : String
     private lateinit var password : String
+    private lateinit var confirmPassword : String
     private lateinit var location : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +60,8 @@ class SignupActivity : AppCompatActivity() {
         ownerNameEditText = binding.signupActivityOwnerName
         businessNameEditText = binding.signupActivityBusinessName
         emailEditText = binding.signupActivityEmail
-        passwordEditText = binding.signupActivityPassword
+        passwordEditText = binding.signupActivityPasswordEditText
+        confirmPasswordEditText = binding.signupActivityConfirmPasswordEditText
         locationAutoCompleteTextView = binding.signupActivityLocationList
 
         auth = FirebaseAuth.getInstance()
@@ -76,7 +80,6 @@ class SignupActivity : AppCompatActivity() {
                 ownerName.trim()
                 businessName.trim()
                 email.trim()
-                password.trim()
 
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
 
@@ -119,13 +122,38 @@ class SignupActivity : AppCompatActivity() {
         binding.signupActivityLocationList.setOnItemClickListener { _, _, _, _ ->
             locationAutoCompleteTextView.error = null
         }
+        binding.signupActivityShowPasswordButton.setOnClickListener{
+            if(binding.signupActivityPasswordEditText.inputType != InputType.TYPE_CLASS_TEXT){
+                binding.signupActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT
+                binding.signupActivityShowPasswordButton.setImageResource(R.drawable.password_shown_icon)
+            }
+            else{
+                binding.signupActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.signupActivityShowPasswordButton.setImageResource(R.drawable.password_hidden_icon)
+            }
+        }
+        binding.signupActivityShowConfirmPasswordButton.setOnClickListener{
+            if(binding.signupActivityConfirmPasswordEditText.inputType != InputType.TYPE_CLASS_TEXT){
+                binding.signupActivityConfirmPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT
+                binding.signupActivityShowConfirmPasswordButton.setImageResource(R.drawable.password_shown_icon)
+            }
+            else{
+                binding.signupActivityConfirmPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.signupActivityShowConfirmPasswordButton.setImageResource(R.drawable.password_hidden_icon)
+            }
+        }
+
     }
     private fun getUserData(){
         ownerName = ownerNameEditText.text.toString()
         businessName = businessNameEditText.text.toString()
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
+        confirmPassword = confirmPasswordEditText.text.toString()
         location = locationAutoCompleteTextView.text.toString()
+
+        Log.d("Hello",password)
+        Log.d("Hello",confirmPassword)
     }
     private fun validateUserData() : Boolean{
 
@@ -227,6 +255,14 @@ class SignupActivity : AppCompatActivity() {
             passwordEditText.requestFocus()
             return false
         }
+
+        // Checks on Confirm Password
+        if (password != confirmPassword){
+            confirmPasswordEditText.error = "Passwords doesn't match"
+            confirmPasswordEditText.requestFocus()
+            return false
+        }
+
         return true
     }
 }

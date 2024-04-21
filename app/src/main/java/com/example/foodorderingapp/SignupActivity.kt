@@ -3,6 +3,7 @@ package com.example.foodorderingapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
@@ -24,10 +25,12 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var name : String
     private lateinit var email : String
     private lateinit var password : String
+    private lateinit var confirmPassword : String
 
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var confirmPasswordEditText: EditText
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
@@ -57,7 +60,8 @@ class SignupActivity : AppCompatActivity() {
     private fun initializeUiElements(){
         nameEditText = binding.signupActivityName
         emailEditText = binding.signupActivityEmail
-        passwordEditText = binding.signupActivityPassword
+        passwordEditText = binding.signupActivityPasswordEditText
+        confirmPasswordEditText = binding.signupActivityConfirmPasswordEditText
 
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.getReference("food ordering app")
@@ -112,11 +116,32 @@ class SignupActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.signupActivityShowPasswordButton.setOnClickListener{
+            if(binding.signupActivityPasswordEditText.inputType != InputType.TYPE_CLASS_TEXT){
+                binding.signupActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT
+                binding.signupActivityShowPasswordButton.setImageResource(R.drawable.password_shown_icon)
+            }
+            else{
+                binding.signupActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.signupActivityShowPasswordButton.setImageResource(R.drawable.password_hidden_icon)
+            }
+        }
+        binding.signupActivityShowConfirmPasswordButton.setOnClickListener{
+            if(binding.signupActivityConfirmPasswordEditText.inputType != InputType.TYPE_CLASS_TEXT){
+                binding.signupActivityConfirmPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT
+                binding.signupActivityShowConfirmPasswordButton.setImageResource(R.drawable.password_shown_icon)
+            }
+            else{
+                binding.signupActivityConfirmPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.signupActivityShowConfirmPasswordButton.setImageResource(R.drawable.password_hidden_icon)
+            }
+        }
     }
     private fun getUserData(){
         name = nameEditText.text.toString()
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
+        confirmPassword = confirmPasswordEditText.text.toString()
     }
     private fun validateUserData() : Boolean{
 
@@ -199,6 +224,14 @@ class SignupActivity : AppCompatActivity() {
             passwordEditText.requestFocus()
             return false
         }
+
+        // Checks on Confirm Password
+        if (password != confirmPassword){
+            confirmPasswordEditText.error = "Passwords doesn't match"
+            confirmPasswordEditText.requestFocus()
+            return false
+        }
+
         return true
     }
 }

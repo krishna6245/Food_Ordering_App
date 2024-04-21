@@ -48,15 +48,15 @@
         android:id="@+id/signupActivityLocationView"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/custom_button_white"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:endIconDrawable="@drawable/down_arrow"
         app:endIconTint="@color/black"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupActivitySignupText">
@@ -75,7 +75,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/signupActivityOwnerName"
         android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_height="47dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -95,7 +95,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/signupActivityBusinessName"
         android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_height="47dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -115,7 +115,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/signupActivityEmail"
         android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_height="47dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -132,27 +132,113 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupActivityBusinessName" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/signupActivityPassword"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/signupActivityPasswordLayout"
         android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_height="47dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/custom_editview"
-        android:drawableStart="@drawable/password_icon"
-        android:drawablePadding="15dp"
-        android:fontFamily="@font/yatraone_regular"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingStart="20dp"
-        android:paddingEnd="15dp"
-        android:singleLine="true"
-        android:textSize="15sp"
+        android:paddingTop="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityEmail" />
+        app:layout_constraintTop_toBottomOf="@id/signupActivityEmail">
 
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/signupActivityPasswordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:drawableStart="@drawable/password_icon"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/yatraone_regular"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingEnd="5dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/signupActivityShowPasswordButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="2dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/signupActivityPasswordEditText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/password_hidden_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/signupActivityConfirmPasswordLayout"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/custom_editview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signupActivityPasswordLayout">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/signupActivityConfirmPasswordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:drawableStart="@drawable/password_icon"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/yatraone_regular"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:paddingEnd="5dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/signupActivityShowConfirmPasswordButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/signupActivityConfirmPasswordEditText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/password_hidden_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/signupActivityContinueText"
         android:layout_width="wrap_content"
@@ -164,7 +250,7 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/signupActivityConfirmPasswordLayout" />
 
 
     <androidx.appcompat.widget.AppCompatButton
