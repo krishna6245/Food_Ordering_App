@@ -3,12 +3,19 @@ package com.example.adminpanel
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.adminpanel.databinding.ActivitySignupBinding
 import android.widget.ArrayAdapter
 import android.util.Patterns
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.Toast
+import com.example.adminpanel.dataModels.AdminUserModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
@@ -16,6 +23,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var locationItemAdapter : ArrayAdapter<String>
 
     private lateinit var auth : FirebaseAuth
+    private lateinit var database : DatabaseReference
 
     private lateinit var ownerNameEditText: EditText
     private lateinit var businessNameEditText: EditText
@@ -53,29 +61,57 @@ class SignupActivity : AppCompatActivity() {
         locationAutoCompleteTextView = binding.signupActivityLocationList
 
         auth = FirebaseAuth.getInstance()
+        database = Firebase.database.getReference("admin panel")
     }
     private fun setListeners(){
-        binding.apply {
-            signupActivityAlreadyHaveAcountButton.setOnClickListener {
-                finish()
-            }
-            signupActivityCreateAccountButton.setOnClickListener {
-                getUserData()
-                if(validateUserData()){
-                    createUser()
+        binding.signupActivityAlreadyHaveAcountButton.setOnClickListener {
+            finish()
+        }
+        binding.signupActivityCreateAccountButton.setOnClickListener {
+            getUserData()
 
-                    val intent = Intent(this@SignupActivity , MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
+            if(validateUserData()){
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
+
+                    if(task.isSuccessful){
+
+                        val userId = auth.currentUser!!.uid
+                        val adminUser = AdminUserModel(location,ownerName,businessName,email,password)
+                        database.child("users").child(userId).setValue(adminUser)
+
+                        val intent = Intent(this@SignupActivity , MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        return@addOnCompleteListener
+                    }
+
+                    val exception = task.exception
+                    if (exception is FirebaseAuthException) {
+                        val error = exception.errorCode
+
+                        if (error == "ERROR_EMAIL_ALREADY_IN_USE"){
+                            emailEditText.error = "Email Already in use!!"
+                            emailEditText.requestFocus()
+                            return@addOnCompleteListener
+                        }
+                        if (error == "ERROR_INVALID_EMAIL"){
+                            emailEditText.error = "Invalid Email!!"
+                            emailEditText.requestFocus()
+                            return@addOnCompleteListener
+                        }
+                        if (error == "ERROR_WEAK_PASSWORD"){
+                            passwordEditText.error = "Weak Password!!"
+                            passwordEditText.requestFocus()
+                            return@addOnCompleteListener
+                        }
+                        Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-            signupActivityLocationList.setOnItemClickListener { _, _, _, _ ->
-                signupActivityLocationList.error = null
-            }
         }
-    }
-    private fun createUser(){
-
+        binding.signupActivityLocationList.setOnItemClickListener { _, _, _, _ ->
+            locationAutoCompleteTextView.error = null
+        }
     }
     private fun getUserData(){
         ownerName = ownerNameEditText.text.toString()
@@ -186,5 +222,4 @@ class SignupActivity : AppCompatActivity() {
         }
         return true
     }
-
 }

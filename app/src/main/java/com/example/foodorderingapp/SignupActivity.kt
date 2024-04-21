@@ -6,9 +6,17 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
+import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
+import android.widget.Toast
+import com.example.foodorderingapp.dataModels.UserModel
 import com.example.foodorderingapp.databinding.ActivitySignupBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
@@ -21,13 +29,15 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
 
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database : DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
     }
-
     private fun init(){
         setLayout()
         initializeUiElements()
@@ -48,18 +58,54 @@ class SignupActivity : AppCompatActivity() {
         nameEditText = binding.signupActivityName
         emailEditText = binding.signupActivityEmail
         passwordEditText = binding.signupActivityPassword
+
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database.getReference("food ordering app")
     }
     private fun setListeners(){
-        binding.signupActivitySignupText.setOnClickListener{
+        binding.signupActivityAlreayHaveAccount.setOnClickListener{
             val intent= Intent(this,LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
-        binding.signupActivityLoginButton.setOnClickListener{
+        binding.signupActivitySignupButton.setOnClickListener{
             getUserData()
             if(validateUserData()){
-                val intent= Intent(this,SelectLocationActivity::class.java)
-                startActivity(intent)
+
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
+                    if(task.isSuccessful){
+                        val userId = auth.currentUser!!.uid
+                        val user = UserModel(name,email,password)
+
+                        database.child("users").child(userId).setValue(user)
+
+                        val intent = Intent(this , MainActivity::class.java)
+                        startActivity(intent)
+                        return@addOnCompleteListener
+                    }
+                    val exception = task.exception
+                    if (exception is FirebaseAuthException) {
+                        val error = exception.errorCode
+
+                        if (error == "ERROR_EMAIL_ALREADY_IN_USE"){
+                            emailEditText.error = "Email Already in use!!"
+                            emailEditText.requestFocus()
+                            return@addOnCompleteListener
+                        }
+                        if (error == "ERROR_INVALID_EMAIL"){
+                            emailEditText.error = "Invalid Email!!"
+                            emailEditText.requestFocus()
+                            return@addOnCompleteListener
+                        }
+                        if (error == "ERROR_WEAK_PASSWORD"){
+                            passwordEditText.error = "Weak Password!!"
+                            passwordEditText.requestFocus()
+                            return@addOnCompleteListener
+                        }
+                        Log.e("Hello",error)
+                        Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }
@@ -151,5 +197,4 @@ class SignupActivity : AppCompatActivity() {
         }
         return true
     }
-    private fun createUser(){}
 }

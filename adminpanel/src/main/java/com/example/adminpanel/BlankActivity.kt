@@ -3,8 +3,7 @@ package com.example.adminpanel
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.view.LayoutInflater
+import com.google.firebase.FirebaseApp
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.adminpanel.databinding.ActivityBlankBinding
 
@@ -19,10 +18,10 @@ class BlankActivity : AppCompatActivity() {
         init()
     }
     private fun init(){
-        Handler().postDelayed({
-            val intent = Intent(this , LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        },0)
+        FirebaseApp.initializeApp(this)
+
+        val intent = Intent(this , LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

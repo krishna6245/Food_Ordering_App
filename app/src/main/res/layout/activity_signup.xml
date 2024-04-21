@@ -164,7 +164,7 @@
         app:layout_constraintTop_toBottomOf="@id/signupActivtyContinueText" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signupActivityLoginButton"
+        android:id="@+id/signupActivitySignupButton"
         android:layout_width="157dp"
         android:layout_height="57dp"
         android:layout_marginTop="10dp"
@@ -179,7 +179,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signupActivityFacebookButton" />
 
     <TextView
-        android:id="@+id/signupActivitySignupText"
+        android:id="@+id/signupActivityAlreayHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -188,9 +188,9 @@
         android:text="Already Have an Account?"
         android:textColor="@color/accent_color"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivityLoginButton"
-        app:layout_constraintStart_toStartOf="@+id/signupActivityLoginButton"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivityLoginButton" />
+        app:layout_constraintEnd_toEndOf="@+id/signupActivitySignupButton"
+        app:layout_constraintStart_toStartOf="@+id/signupActivitySignupButton"
+        app:layout_constraintTop_toBottomOf="@+id/signupActivitySignupButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
