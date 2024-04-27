@@ -19,9 +19,14 @@ private lateinit var binding : ActivityBlankBinding
     }
 
     private fun init(){
+        initialiseUiReferences()
+        redirect()
+    }
+    private fun initialiseUiReferences(){
         FirebaseApp.initializeApp(this)
-
-        val intent= Intent(this,SplashScreen::class.java)
+    }
+    private fun redirect(){
+        val intent = Intent(this , SplashScreen::class.java)
         startActivity(intent)
         finish()
     }

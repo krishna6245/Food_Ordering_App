@@ -10,4 +10,5 @@
     <string name="signup_title">Sign Up Here</string>
     <string name="app_permissions">To provide you with the best dining experience, we need your permission to access your device\'s location. By enabling location services, we can offer personalized restaurant recommendations, accurate delivery estimates, and ensure a seamless food delivery experience.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_client_id">748964621753-t5skf98tdfnk7dhc4ulh95uqef0mn19q.apps.googleusercontent.com</string>
 </resources>

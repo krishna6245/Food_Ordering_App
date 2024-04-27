@@ -3,4 +3,5 @@
     <string name="app_logo">App Logo</string>
     <string name="application_name">Fooding Haven</string>
     <string name="app_motto">Feels like magic...</string>
+    <string name="default_web_client_id">748964621753-t5skf98tdfnk7dhc4ulh95uqef0mn19q.apps.googleusercontent.com</string>
 </resources>

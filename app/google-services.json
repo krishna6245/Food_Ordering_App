@@ -13,7 +13,20 @@
           "package_name": "com.example.adminpanel"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "748964621753-85r4cciliv69rnjd4a44dlihl3am6i9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.adminpanel",
+            "certificate_hash": "1335a5b83d56d118163cc7cdc0a077e1c101dffc"
+          }
+        },
+        {
+          "client_id": "748964621753-t5skf98tdfnk7dhc4ulh95uqef0mn19q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAL4y_FPbDc-eqSew8p0mYF_uXvzKNVcqg"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748964621753-t5skf98tdfnk7dhc4ulh95uqef0mn19q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -32,7 +50,20 @@
           "package_name": "com.example.foodorderingapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "748964621753-62e9grhi89637svie7rnq0sun6h10jlh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodorderingapp",
+            "certificate_hash": "1335a5b83d56d118163cc7cdc0a077e1c101dffc"
+          }
+        },
+        {
+          "client_id": "748964621753-t5skf98tdfnk7dhc4ulh95uqef0mn19q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAL4y_FPbDc-eqSew8p0mYF_uXvzKNVcqg"
@@ -40,7 +71,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748964621753-t5skf98tdfnk7dhc4ulh95uqef0mn19q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

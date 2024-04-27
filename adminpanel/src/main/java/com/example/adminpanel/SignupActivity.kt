@@ -1,5 +1,6 @@
 package com.example.adminpanel
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.Toast
 import com.example.adminpanel.dataModels.AdminUserModel
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.database.DatabaseReference
@@ -25,6 +33,10 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
+    private lateinit var gso: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    private val googleSignUpRequestCode = 100
 
     private lateinit var ownerNameEditText: EditText
     private lateinit var businessNameEditText: EditText
@@ -66,6 +78,13 @@ class SignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.getReference("admin panel")
+
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
     }
     private fun setListeners(){
         binding.signupActivityAlreadyHaveAcountButton.setOnClickListener {
@@ -84,7 +103,6 @@ class SignupActivity : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
 
                     if(task.isSuccessful){
-
                         val userId = auth.currentUser!!.uid
                         val adminUser = AdminUserModel(location,ownerName,businessName,email,password)
                         database.child("users").child(userId).setValue(adminUser)
@@ -122,6 +140,8 @@ class SignupActivity : AppCompatActivity() {
         binding.signupActivityLocationList.setOnItemClickListener { _, _, _, _ ->
             locationAutoCompleteTextView.error = null
         }
+
+        //Show/Hide Password
         binding.signupActivityShowPasswordButton.setOnClickListener{
             if(binding.signupActivityPasswordEditText.inputType != InputType.TYPE_CLASS_TEXT){
                 binding.signupActivityPasswordEditText.inputType = InputType.TYPE_CLASS_TEXT
@@ -143,6 +163,58 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
+        binding.signupActivityGoogleButton.setOnClickListener{
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, googleSignUpRequestCode)
+        }
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == googleSignUpRequestCode) {
+            if (resultCode == Activity.RESULT_OK){
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    firebaseAuthWithGoogle(account)
+                } catch (e: ApiException) {
+                    Toast.makeText(this,"Can't create Account. Try Again",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    private fun firebaseAuthWithGoogle(account : GoogleSignInAccount) {
+        val idToken = account.idToken
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val currentUser = auth.currentUser
+                    if (currentUser != null) {
+                        email = currentUser.email.toString()
+                        ownerName = currentUser.displayName.toString()
+                        val userId = currentUser.uid
+
+                        val encryptedEmail = email.replace('.',',')
+
+                        database.child("user id").child(encryptedEmail).setValue(userId.toString())
+
+                        val adminUser = AdminUserModel(null, ownerName, null, email, null)
+                        database.child("user data").child(userId).setValue(adminUser)
+
+                        val intent = Intent(this@SignupActivity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        return@addOnCompleteListener
+                    }
+                    Toast.makeText(
+                        applicationContext,
+                        "Failed to Login to your Account. Try Again!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
     private fun getUserData(){
         ownerName = ownerNameEditText.text.toString()
@@ -151,9 +223,6 @@ class SignupActivity : AppCompatActivity() {
         password = passwordEditText.text.toString()
         confirmPassword = confirmPasswordEditText.text.toString()
         location = locationAutoCompleteTextView.text.toString()
-
-        Log.d("Hello",password)
-        Log.d("Hello",confirmPassword)
     }
     private fun validateUserData() : Boolean{
 

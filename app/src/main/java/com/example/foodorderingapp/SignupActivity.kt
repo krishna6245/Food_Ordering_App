@@ -13,8 +13,13 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.foodorderingapp.dataModels.UserModel
 import com.example.foodorderingapp.databinding.ActivitySignupBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -34,6 +39,11 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
+
+    private lateinit var gso : GoogleSignInOptions
+    private lateinit var googleSignInClient : GoogleSignInClient
+
+    private val googleSignUpRequestCode = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +75,13 @@ class SignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.getReference("food ordering app")
+
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this,gso)
     }
     private fun setListeners(){
         binding.signupActivityAlreayHaveAccount.setOnClickListener{
@@ -136,6 +153,43 @@ class SignupActivity : AppCompatActivity() {
                 binding.signupActivityShowConfirmPasswordButton.setImageResource(R.drawable.password_hidden_icon)
             }
         }
+        binding.signupActivityGoogleButton.setOnClickListener{
+            val signUpIntent = googleSignInClient.signInIntent
+            startActivityForResult(signUpIntent,googleSignUpRequestCode)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == googleSignUpRequestCode){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account.idToken!!)
+            }
+            catch (e : ApiException){
+                Toast.makeText(this,"Can't create Account. Try Again",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun firebaseAuthWithGoogle(idToken : String){
+        val credential = GoogleAuthProvider.getCredential(idToken,null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this){task ->
+                if(task.isSuccessful){
+
+                    //TODO
+                    //Create user record in database
+
+                    val intent = Intent(this@SignupActivity , MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    return@addOnCompleteListener
+                }
+
+                Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_SHORT).show()
+            }
     }
     private fun getUserData(){
         name = nameEditText.text.toString()
