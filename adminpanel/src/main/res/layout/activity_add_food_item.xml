@@ -37,13 +37,13 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/addFoodItemActivityAddItemButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFoodActivityAddItemText"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/addFoodActivityAddItemText">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -60,6 +60,7 @@
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
                 app:cardMaxElevation="5dp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -185,15 +186,17 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2">
 
-                        <TextView
+                        <EditText
                             android:id="@+id/addFoodItemActivityFoodImageName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="2"
                             android:fontFamily="@font/yeonsung_regular"
-                            android:text="TextView"
                             android:textSize="20sp"
+                            android:background="@android:color/transparent"
+                            android:hint="Food Image Name"
+                            android:editable="false"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/addFoodItemActivityAddFoodImageButton"
                             app:layout_constraintStart_toStartOf="parent"
@@ -203,6 +206,8 @@
                             android:id="@+id/addFoodItemActivityAddFoodImageButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
                             android:layout_gravity="center_vertical"
                             android:layout_marginEnd="20dp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -216,8 +221,8 @@
 
             <ImageView
                 android:id="@+id/addFoodItemActivityFoodImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -315,6 +320,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
+                    android:background="@android:color/transparent"
                     android:fontFamily="@font/yeonsung_regular"
                     android:text="Short Description"
                     android:textSize="24sp" />
@@ -327,8 +333,7 @@
                 android:layout_marginStart="15sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15sp"
-                android:background="@color/white"
-                android:ems="10"
+                android:background="@android:color/transparent"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|top"
                 android:hint="Write a Brief Description of Your Food"
@@ -338,41 +343,44 @@
                 app:layout_constraintStart_toStartOf="@+id/cardView2"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-            <TextView
+            <EditText
                 android:id="@+id/addFoodItemActivityIngredientsList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
-                android:text="Food Ingredients\n\n\nzdxgc\n\nzrsxdcgv\nazsdxcf\nsdfxcf\nzsexdc\nawesrd\nrsxdcgfv\nzsxdfcg\nrsxdc"
-                android:textSize="16sp"
                 android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:color/transparent"
+                android:hint="Food Ingredients List"
+                android:fontFamily="@font/lato_bold"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/addFoodItemActivityIngredientsLayout"
                 app:layout_constraintStart_toStartOf="@+id/addFoodItemActivityIngredientsLayout"
                 app:layout_constraintTop_toBottomOf="@+id/addFoodItemActivityIngredientsLayout" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addFoodItemActivityAddItemButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Item"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:fontFamily="@font/yeonsung_regular"
+                android:textAllCaps="false"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="60dp"
+                android:paddingEnd="60dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/addFoodItemActivityIngredientsList"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/addFoodItemActivityAddItemButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Item"
-        android:background="@drawable/custom_button"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:fontFamily="@font/yeonsung_regular"
-        android:textAllCaps="false"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingStart="60dp"
-        android:paddingEnd="60dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
