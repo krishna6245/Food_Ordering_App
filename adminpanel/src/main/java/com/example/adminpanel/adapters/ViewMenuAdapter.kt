@@ -1,33 +1,37 @@
 package com.example.adminpanel.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.adminpanel.dataModels.MenuItemModel
 import com.example.adminpanel.databinding.ActivityViewMenuBinding
 import com.example.adminpanel.databinding.ViewMenuItemLayoutBinding
 
 class ViewMenuAdapter(private val context: Context,
-                      private val names : MutableList<String>,
-                      private val restaurants : MutableList<String>,
-                      private val images : MutableList<Int>,
-                      private val prices : MutableList<Int>,
+                      private val menuList : MutableList<MenuItemModel>,
                       private val quantities : MutableList<Int>) : RecyclerView.Adapter<ViewMenuAdapter.ViewMenuHolder>(){
     inner class ViewMenuHolder(private val binding: ViewMenuItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int){
             binding.apply {
-                viewMenuFoodName.text = names[position]
-                viewMenuFoodImage.setImageResource(images[position])
-                viewMenuFoodRestaurantName.text = restaurants[position]
-                viewMenuFoodQuantity.text = quantities[position].toString()
+                val menuItem = menuList[position]
 
-                val viewPrice = "Rs.${prices[position]}"
+                viewMenuFoodName.text = menuItem.foodName
+                viewMenuFoodRestaurantName.text = menuItem.restaurantName
+
+                val viewPrice = "Rs.${menuItem.foodPrice}"
                 viewMenuFoodPrice.text = viewPrice
+
+                val imageUri = Uri.parse(menuItem.foodImage)
+                Glide.with(context).load(imageUri).into(viewMenuFoodImage)
+
+                viewMenuFoodQuantity.text = quantities[position].toString()
 
                 viewMenuIncreaseButton.setOnClickListener {
                     increaseItem(position)
                 }
-
                 viewMenuDecreaseButton.setOnClickListener {
                     decreaseItem(position)
                 }
@@ -42,7 +46,7 @@ class ViewMenuAdapter(private val context: Context,
             binding.viewMenuFoodQuantity.text = quantities[position].toString()
         }
         private fun decreaseItem(position: Int){
-            quantities[position]--;
+            quantities[position]--
             if(quantities[position]==0){
                 removeItem(position)
                 return
@@ -50,13 +54,10 @@ class ViewMenuAdapter(private val context: Context,
             binding.viewMenuFoodQuantity.text = quantities[position].toString()
         }
         private fun removeItem(position: Int){
+            menuList.removeAt(position)
             quantities.removeAt(position)
-            names.removeAt(position)
-            prices.removeAt(position)
-            images.removeAt(position)
-            restaurants.removeAt(position)
             notifyItemRemoved(position)
-            notifyItemRangeChanged(position,images.size)
+            notifyItemRangeChanged(position,menuList.size)
         }
     }
 
@@ -66,7 +67,7 @@ class ViewMenuAdapter(private val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return names.size
+        return menuList.size
     }
 
     override fun onBindViewHolder(holder: ViewMenuHolder, position: Int) {

@@ -2,17 +2,27 @@ package com.example.adminpanel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.example.adminpanel.adapters.ViewMenuAdapter
+import com.example.adminpanel.dataModels.MenuItemModel
 import com.example.adminpanel.databinding.ActivityViewMenuBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ViewMenuActivity : AppCompatActivity() {
     private lateinit var binding : ActivityViewMenuBinding
-    private lateinit var allItemFoodNames : MutableList<String>
-    private lateinit var allItemFoodRestaurants : MutableList<String>
-    private lateinit var allItemFoodImages : MutableList<Int>
-    private lateinit var allItemFoodPrices : MutableList<Int>
+
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+
+    private lateinit var menuList : MutableList<MenuItemModel>
     private lateinit var allItemFoodQuantities : MutableList<Int>
+
     private lateinit var viewMenuAdapter: ViewMenuAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,22 +31,43 @@ class ViewMenuActivity : AppCompatActivity() {
         init()
     }
     private fun init(){
-        setLists()
-        setAdapters()
         setListeners()
+        initializeUiElements()
     }
-    private fun setLists(){
-        allItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        allItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
-        allItemFoodRestaurants = mutableListOf("Surya Restaurant","Monarch Hotel","Shivam Restaurant","Mukesh Momos","Monarch Hotel","Lal Bagh Ka Raja","Durga Canteen","Dreams Bakery")
-        val a:Int = R.drawable.dummy_image
-        val b:Int = R.drawable.dummy_image_1
-        allItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
+    private fun initializeUiElements(){
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        menuList = mutableListOf()
+
         allItemFoodQuantities = mutableListOf(1,2,3,10,5,2,8,5)
 
+        retrieveMenuItems()
+
+    }
+    private fun retrieveMenuItems(){
+        val menuReference = database.reference.child("menu")
+
+        menuReference.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                menuList.clear()
+
+                for (menuItemSnapshot in snapshot.children){
+                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
+                    menuItem?.let {
+                        menuList.add(menuItem)
+                    }
+                }
+                setAdapters()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
+            }
+        })
     }
     private fun setAdapters(){
-        viewMenuAdapter = ViewMenuAdapter(applicationContext , allItemFoodNames , allItemFoodRestaurants , allItemFoodImages , allItemFoodPrices , allItemFoodQuantities)
+        viewMenuAdapter = ViewMenuAdapter(this , menuList , allItemFoodQuantities)
         binding.viewMenuActivityItemList.layoutManager = LinearLayoutManager(applicationContext)
         binding.viewMenuActivityItemList.adapter = viewMenuAdapter
     }
