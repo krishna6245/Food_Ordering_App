@@ -1,26 +1,30 @@
 package com.example.foodorderingapp.fragment.bottomSheets
 
-import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.MenuItemAdapter
+import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.example.foodorderingapp.databinding.FragmentMenuBottomSheetBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MenuBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding : FragmentMenuBottomSheetBinding
     private lateinit var menuBottomSheetAdapter : MenuItemAdapter
-    private lateinit var menuBottomSheetItemFoodNames : MutableList<String>
-    private lateinit var menuBottomSheetItemFoodImages : MutableList<Int>
-    private lateinit var menuBottomSheetItemFoodPrices : MutableList<Int>
+
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+
+    private lateinit var menuList : MutableList<MenuItemModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,19 +39,41 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun init(){
-        setLists()
-        setAdapters()
+        initializeUiElements()
         setListeners()
     }
-    private fun setLists(){
-        menuBottomSheetItemFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        menuBottomSheetItemFoodPrices = mutableListOf(100,70,150,60,75,80,40,60,70,150,60,75,80,40,60,70,150,60,75,80,40,60)
-        val a:Int = R.drawable.dummy_image
-        val b:Int = R.drawable.dummy_image_1
-        menuBottomSheetItemFoodImages = mutableListOf(a,b,a,b,a,b,a,b,b,a,b,a,b,a,b,b,a,b,a,b,a,b)
+    private fun initializeUiElements(){
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        menuList = mutableListOf()
+
+        retrieveMenu()
+    }
+    private fun retrieveMenu(){
+        val menuReference = database.reference.child("menu")
+
+        menuReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                menuList.clear()
+
+                for (menuItemSnapshot in snapshot.children){
+                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
+                    menuItem?.let {
+                        menuList.add(menuItem)
+                    }
+                }
+                setAdapters()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
+            }
+
+        })
     }
     private fun setAdapters(){
-        menuBottomSheetAdapter = MenuItemAdapter(menuBottomSheetItemFoodNames,menuBottomSheetItemFoodImages,menuBottomSheetItemFoodPrices,requireActivity())
+        menuBottomSheetAdapter = MenuItemAdapter(requireActivity(),menuList)
         binding.menuBottomSheetItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuBottomSheetItemList.adapter = menuBottomSheetAdapter
     }

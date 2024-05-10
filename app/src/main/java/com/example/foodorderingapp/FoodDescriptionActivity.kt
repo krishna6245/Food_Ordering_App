@@ -1,20 +1,33 @@
 package com.example.foodorderingapp
 
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.BulletSpan
+import android.util.Log
+import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
 import com.example.foodorderingapp.databinding.ActivityFoodDescriptionBinding
 
 class FoodDescriptionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFoodDescriptionBinding
-    private lateinit var foodName : String
-    private lateinit var foodDescription : String
-    private lateinit var foodIngredient : String
-    private lateinit var foodIngredientsList : ArrayList<String>
-    private var foodImage = 0
 
+    private var foodName : String? = null
+    private var foodDescription : String? = null
+    private var foodIngredient : String? = null
+    private var foodIngredientsList : ArrayList<String>? = null
+    private var foodImageUri : Uri? = null
+
+
+    private fun log(s : String?){
+        Log.d("TTag","$s")
+    }
+    private fun log(s : Int?){
+        Log.d("TTag","$s")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFoodDescriptionBinding.inflate(layoutInflater)
@@ -27,22 +40,25 @@ class FoodDescriptionActivity : AppCompatActivity() {
         setListeners()
     }
     private fun setLists(){
-        foodName = intent.getStringExtra("key_name") ?: "Food Name"
-        foodImage = intent.getIntExtra("key_image" , R.drawable.dummy_image)
-        foodDescription = intent.getStringExtra("key_description") ?:  "Sample Description"
-        foodIngredientsList = intent.getStringArrayListExtra("key_ingredients") ?: arrayListOf()
+        val foodImage = intent.getStringExtra("key_image")
+
+        foodName = intent.getStringExtra("key_name")
+        foodDescription = intent.getStringExtra("key_description")
+        foodIngredientsList = intent.getStringArrayListExtra("key_ingredients")
+        foodImageUri = Uri.parse(foodImage)
 
         val stringBuilder = StringBuilder()
-        for(item in foodIngredientsList){
-            stringBuilder.append("• ").append(item).append("\n")
+        if(foodIngredientsList != null){
+            for(item in foodIngredientsList!!){
+                stringBuilder.append("• ").append(item).append("\n")
+            }
         }
-
         foodIngredient = stringBuilder.toString()
     }
     private fun setLayouts(){
         binding.apply {
             foodDescriptionActivityFoodName.text = foodName
-            foodDescriptionActivityFoodImage.setImageResource(foodImage)
+            Glide.with(this@FoodDescriptionActivity).load(foodImageUri).into(foodDescriptionActivityFoodImage)
             foodDescriptionActivityFoodDescription.text = foodDescription
             foodDescriptionActivityFoodIngredients.text = foodIngredient
         }

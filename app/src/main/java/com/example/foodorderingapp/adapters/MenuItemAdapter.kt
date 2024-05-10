@@ -2,55 +2,61 @@ package com.example.foodorderingapp.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.os.Looper
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodorderingapp.databinding.MenuItemLayoutBinding
-import android.os.Handler
+import com.bumptech.glide.Glide
 import com.example.foodorderingapp.FoodDescriptionActivity
+import com.example.foodorderingapp.dataModels.MenuItemModel
 
-class MenuItemAdapter(private val names : List<String>,
-                      private val images : List<Int>,
-                      private val prices : List<Int>,
-                      private val context : Context) : RecyclerView.Adapter<MenuItemAdapter.MenuItemHolder>() {
+class MenuItemAdapter(private val context : Context,
+                      private val menuList : MutableList<MenuItemModel>) : RecyclerView.Adapter<MenuItemAdapter.MenuItemHolder>() {
     inner class MenuItemHolder(private val binding: MenuItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) {
             binding.apply {
-                menuItemName.text=names[position]
-                menuItemImage.setImageResource(images[position])
-                val viewPrice = "Rs.${prices[position]}"
+                val menuItem = menuList[position]
+
+                menuItemName.text = menuItem.foodName
+
+                val imageUri = Uri.parse(menuItem.foodImage)
+                Glide.with(context).load(imageUri).into(menuItemImage)
+
+                val viewPrice = "Rs.${menuItem.foodPrice}"
                 menuItemPrice.text = viewPrice
             }
         }
-    }
 
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuItemHolder {
         val view = MenuItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return MenuItemHolder(view)
     }
-
     override fun getItemCount(): Int {
-        return names.size
+        return menuList.size
     }
-
     override fun onBindViewHolder(holder: MenuItemHolder, position: Int) {
         holder.bind(position)
         holder.itemView.setOnClickListener{
-            Handler().postDelayed({
-                val intent = Intent(context , FoodDescriptionActivity::class.java )
+            val intent = Intent(context , FoodDescriptionActivity::class.java )
 
-                val name = names[position]
-                val image = images[position]
-                val description = "This is very tasty Food" //TODO
-                val ingredients = arrayListOf<String>("Wheat","Rice","Grains","Protein")
-                intent.putExtra("key_name",name)
-                intent.putExtra("key_image",image)
-                intent.putExtra("key_description",description)
-                intent.putStringArrayListExtra("key_ingredients",ingredients)
+            val menuItem = menuList[position]
 
-                context.startActivity(intent)
-            },0)
+            val name = menuItem.foodName
+            val image = menuItem.foodImage
+            val description = menuItem.foodDescription
+            val ingredients = menuItem.foodIngredients
+
+            intent.putExtra("key_name",name)
+            intent.putExtra("key_image",image)
+            intent.putExtra("key_description",description)
+            if(ingredients != null){
+                intent.putStringArrayListExtra("key_ingredients",ArrayList(ingredients))
+            }
+
+            context.startActivity(intent)
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.foodorderingapp.fragment
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,22 +17,29 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.HomeFragmentImageAdapter
 import com.example.foodorderingapp.adapters.MenuItemAdapter
+import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.example.foodorderingapp.databinding.FragmentHomeBinding
 import com.example.foodorderingapp.fragment.bottomSheets.MenuBottomSheetFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlin.math.abs
 
 class HomeFragment : Fragment() {
     private lateinit var binding:FragmentHomeBinding
+
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database : FirebaseDatabase
 
     private lateinit var homeFragmentViewPager : ViewPager2
     private lateinit var homeFragmentHandler: Handler
     private lateinit var homeFragmentImageList : ArrayList<Int>
     private lateinit var homeFragmentImageAdapter: HomeFragmentImageAdapter
 
+    private lateinit var menuList : MutableList<MenuItemModel>
     private lateinit var homeFragmentPopularItemAdapter: MenuItemAdapter
-    private lateinit var homeFragmentFoodNames : List<String>
-    private lateinit var homeFragmentFoodImages : List<Int>
-    private lateinit var homeFragmentFoodPrices : List<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +53,26 @@ class HomeFragment : Fragment() {
         init()
         return binding.root
     }
+    private fun init(){
+        initializeViewPager()
+        setTransformers()
+        setListeners()
+        initializeUiElements()
+    }
 
-    private fun setLists(){
+    private fun initializeUiElements(){
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        menuList = mutableListOf()
+
+        retrieveMenu()
+    }
+    private fun initializeViewPager(){
         homeFragmentViewPager = binding.homeFragmentImageScrollList
         homeFragmentHandler = Handler(Looper.myLooper()!!)
         homeFragmentImageList = ArrayList()
+
         homeFragmentImageList.add(R.drawable.dummy_image)
         homeFragmentImageList.add(R.drawable.dummy_image_1)
         homeFragmentImageList.add(R.drawable.dummy_image)
@@ -66,16 +89,31 @@ class HomeFragment : Fragment() {
         homeFragmentViewPager.clipToPadding=false
         homeFragmentViewPager.clipChildren=false
         homeFragmentViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+    }
+    private fun retrieveMenu(){
+        val menuReference = database.reference.child("menu")
 
+        menuReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                menuList.clear()
 
-        homeFragmentFoodNames = listOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        homeFragmentFoodPrices = listOf(100,70,150,60,75,80,40,60)
-        val a:Int = R.drawable.dummy_image
-        val b:Int = R.drawable.dummy_image_1
-        homeFragmentFoodImages = listOf(a,b,a,b,a,b,a,b)
+                for (menuItemSnapshot in snapshot.children){
+                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
+                    menuItem?.let {
+                        menuList.add(menuItem)
+                    }
+                }
+                setAdapters()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
+            }
+
+        })
     }
     private fun setAdapters(){
-        homeFragmentPopularItemAdapter = MenuItemAdapter(homeFragmentFoodNames,homeFragmentFoodImages,homeFragmentFoodPrices,requireActivity())
+        homeFragmentPopularItemAdapter = MenuItemAdapter(requireActivity(), menuList)
         binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.homeFragmentPopularItemList.adapter = homeFragmentPopularItemAdapter
     }
@@ -110,11 +148,4 @@ class HomeFragment : Fragment() {
             bottomSheetDialog.show(parentFragmentManager,"Tag")
         }
     }
-    private fun init(){
-        setLists()
-        setAdapters()
-        setTransformers()
-        setListeners()
-    }
-
 }
