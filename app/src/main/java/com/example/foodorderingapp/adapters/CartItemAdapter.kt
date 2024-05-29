@@ -28,15 +28,31 @@ class CartItemAdapter(private val cartItems: MutableList<CartItemModel>,
         val database = FirebaseDatabase.getInstance()
 
         val userId = auth.currentUser?.uid?:""
-        val cartSize = cartItems.size
 
-        itemQuantities = IntArray(cartSize){1}
         cartItemReference = database.reference.child("food ordering app").child("users").child(userId).child("cart items")
+
+        cartItemReference.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(dataSnapshot in snapshot.children){
+                    if(!cartItemId.contains(dataSnapshot.key)){
+                        val cartItem = dataSnapshot.getValue(CartItemModel::class.java)
+                        if (cartItem != null) {
+                            cartItems.add(cartItem)
+                        }
+                        dataSnapshot.key?.let { cartItemId.add(it) }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context,"Database access failed",Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
     }
 
     companion object{
-        private var itemQuantities = intArrayOf()
         private lateinit var cartItemReference : DatabaseReference
     }
 
