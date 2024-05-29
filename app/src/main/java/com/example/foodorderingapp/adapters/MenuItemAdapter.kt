@@ -48,10 +48,14 @@ class MenuItemAdapter(private val context : Context,
             val image = menuItem.foodImage
             val description = menuItem.foodDescription
             val ingredients = menuItem.foodIngredients
+            val restaurant = menuItem.restaurantName
+            val price = menuItem.foodPrice
 
             intent.putExtra("key_name",name)
             intent.putExtra("key_image",image)
             intent.putExtra("key_description",description)
+            intent.putExtra("key_restaurant",restaurant)
+            intent.putExtra("key_price",price)
             if(ingredients != null){
                 intent.putStringArrayListExtra("key_ingredients",ArrayList(ingredients))
             }
