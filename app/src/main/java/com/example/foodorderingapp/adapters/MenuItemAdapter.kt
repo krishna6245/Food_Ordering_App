@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodorderingapp.databinding.MenuItemLayoutBinding
 import com.bumptech.glide.Glide
 import com.example.foodorderingapp.FoodDescriptionActivity
+import com.example.foodorderingapp.dataModels.CartItemModel
 import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
@@ -30,6 +32,7 @@ class MenuItemAdapter(private val context : Context,
 
         val userId = auth.currentUser?.uid?:""
 
+        cartReference = database.reference.child("food ordering app").child("users").child(userId).child("cart items")
         val menuReference = database.reference.child("menu")
 
         if(allowEdits==1){
@@ -53,6 +56,9 @@ class MenuItemAdapter(private val context : Context,
             })
         }
     }
+    companion object{
+        lateinit var cartReference: DatabaseReference
+    }
     inner class MenuItemHolder(private val binding: MenuItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) {
             binding.apply {
@@ -68,7 +74,8 @@ class MenuItemAdapter(private val context : Context,
             }
 
             binding.menuItemCartButton.setOnClickListener{
-
+                val cartItem = CartItemModel(menuList[position],1)
+                cartReference.push().setValue(cartItem)
             }
         }
 
