@@ -24,6 +24,7 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var auth : FirebaseAuth
     private lateinit var database: FirebaseDatabase
 
+    private lateinit var menuItemReference : MutableList<String>
     private lateinit var menuList : MutableList<MenuItemModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,7 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
         database = FirebaseDatabase.getInstance()
 
         menuList = mutableListOf()
+        menuItemReference = mutableListOf()
 
         retrieveMenu()
     }
@@ -62,6 +64,7 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
                     menuItem?.let {
                         menuList.add(menuItem)
                     }
+                    menuItemSnapshot.key?.let { menuItemReference.add(it) }
                 }
                 setAdapters()
             }
@@ -73,7 +76,7 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
         })
     }
     private fun setAdapters(){
-        menuBottomSheetAdapter = MenuItemAdapter(requireActivity(),menuList)
+        menuBottomSheetAdapter = MenuItemAdapter(requireActivity(),1,menuList,menuItemReference)
         binding.menuBottomSheetItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuBottomSheetItemList.adapter = menuBottomSheetAdapter
     }

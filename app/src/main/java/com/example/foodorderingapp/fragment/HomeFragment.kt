@@ -38,7 +38,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeFragmentImageList : ArrayList<Int>
     private lateinit var homeFragmentImageAdapter: HomeFragmentImageAdapter
 
-    private lateinit var menuList : MutableList<MenuItemModel>
+    private lateinit var menuList: MutableList<MenuItemModel>
+    private lateinit var menuItemReference: MutableList<String>
     private lateinit var homeFragmentPopularItemAdapter: MenuItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,8 +66,68 @@ class HomeFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
 
         menuList = mutableListOf()
+        menuItemReference = mutableListOf()
 
         retrieveMenu()
+    }
+    private fun retrieveMenu(){
+        val menuReference = database.reference.child("menu")
+
+        menuReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                menuList.clear()
+
+                for (menuItemSnapshot in snapshot.children){
+                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
+                    menuItem?.let {
+                        menuList.add(menuItem)
+                    }
+                    menuItemSnapshot.key?.let { menuItemReference.add(it) }
+                }
+                setAdapters()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
+            }
+
+        })
+    }
+    private fun setAdapters(){
+        homeFragmentPopularItemAdapter = MenuItemAdapter(requireActivity(),1 , menuList, menuItemReference)
+        binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
+        binding.homeFragmentPopularItemList.adapter = homeFragmentPopularItemAdapter
+    }
+    private val runnable = Runnable{
+        homeFragmentViewPager.currentItem = homeFragmentViewPager.currentItem+1;
+    }
+    private fun setListeners(){
+        homeFragmentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                homeFragmentHandler.removeCallbacks(runnable)
+                homeFragmentHandler.postDelayed(runnable,5000)
+            }
+        })
+
+        binding.homeFragmentViewMenu.setOnClickListener{
+            Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
+        }
+
+        binding.homeFragmentViewMenu.setOnClickListener{
+            val bottomSheetDialog = MenuBottomSheetFragment()
+            bottomSheetDialog.show(parentFragmentManager,"Tag")
+        }
+    }
+    private fun setTransformers(){
+        val transformer = CompositePageTransformer()
+        transformer.addTransformer(MarginPageTransformer(40))
+        transformer.addTransformer{page , position->
+            val r=abs(position)
+            page.scaleY = 1f - r * 0.2f
+        }
+
+        homeFragmentViewPager.setPageTransformer(transformer)
     }
     private fun initializeViewPager(){
         homeFragmentViewPager = binding.homeFragmentImageScrollList
@@ -89,63 +150,5 @@ class HomeFragment : Fragment() {
         homeFragmentViewPager.clipToPadding=false
         homeFragmentViewPager.clipChildren=false
         homeFragmentViewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-    }
-    private fun retrieveMenu(){
-        val menuReference = database.reference.child("menu")
-
-        menuReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                menuList.clear()
-
-                for (menuItemSnapshot in snapshot.children){
-                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
-                    menuItem?.let {
-                        menuList.add(menuItem)
-                    }
-                }
-                setAdapters()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
-            }
-
-        })
-    }
-    private fun setAdapters(){
-        homeFragmentPopularItemAdapter = MenuItemAdapter(requireActivity(), menuList)
-        binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
-        binding.homeFragmentPopularItemList.adapter = homeFragmentPopularItemAdapter
-    }
-    private val runnable = Runnable{
-        homeFragmentViewPager.currentItem = homeFragmentViewPager.currentItem+1;
-    }
-    private fun setTransformers(){
-        val transformer = CompositePageTransformer()
-        transformer.addTransformer(MarginPageTransformer(40))
-        transformer.addTransformer{page , position->
-            val r=abs(position)
-            page.scaleY = 1f - r * 0.2f
-        }
-
-        homeFragmentViewPager.setPageTransformer(transformer)
-    }
-    private fun setListeners(){
-        homeFragmentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                homeFragmentHandler.removeCallbacks(runnable)
-                homeFragmentHandler.postDelayed(runnable,5000)
-            }
-        })
-
-        binding.homeFragmentViewMenu.setOnClickListener{
-            Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
-        }
-
-        binding.homeFragmentViewMenu.setOnClickListener{
-            val bottomSheetDialog = MenuBottomSheetFragment()
-            bottomSheetDialog.show(parentFragmentManager,"Tag")
-        }
     }
 }

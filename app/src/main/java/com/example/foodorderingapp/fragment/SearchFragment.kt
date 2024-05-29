@@ -77,7 +77,7 @@ class SearchFragment : Fragment() {
         })
     }
     private fun setAdapters(){
-        searchItemAdapter = MenuItemAdapter(requireContext(), filteredMenuList)
+        searchItemAdapter = MenuItemAdapter(requireContext(), 0 , filteredMenuList)
         binding.menuFragmentMenuItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuFragmentMenuItemList.adapter = searchItemAdapter
     }
