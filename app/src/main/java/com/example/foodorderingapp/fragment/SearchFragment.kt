@@ -13,8 +13,10 @@ import com.example.foodorderingapp.adapters.MenuItemAdapter
 import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.example.foodorderingapp.databinding.FragmentSearchBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
@@ -25,6 +27,9 @@ class SearchFragment : Fragment() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    private lateinit var menuReference: DatabaseReference
+
+    private var currentSearch: String = ""
 
     private lateinit var searchMenuList : MutableList<MenuItemModel>
     private lateinit var filteredMenuList : MutableList<MenuItemModel>
@@ -43,67 +48,66 @@ class SearchFragment : Fragment() {
     }
 
     private fun init(){
-        setListeners()
         initializeUiElements()
+        setAdapters()
+        setListeners()
+        retrieveMenu()
     }
     private fun initializeUiElements(){
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
+        menuReference = database.reference.child("menu")
+
         searchMenuList = mutableListOf()
         filteredMenuList = mutableListOf()
-
-        retrieveMenu()
     }
     private fun retrieveMenu(){
-        val menuReference = database.reference.child("menu")
-
-        menuReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                searchMenuList.clear()
-
-                for (menuItemSnapshot in snapshot.children){
-                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
-                    menuItem?.let {
-                        searchMenuList.add(menuItem)
+        menuReference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val menuItem = snapshot.getValue(MenuItemModel::class.java)
+                if(menuItem!=null){
+                    searchMenuList.add(menuItem)
+                    if(menuItem.foodName!!.contains(currentSearch,ignoreCase = true)){
+                        filteredMenuList.add(menuItem)
+                        searchItemAdapter.notifyItemInserted(filteredMenuList.size-1)
                     }
                 }
-                filteredMenuList.addAll(searchMenuList)
-                setAdapters()
             }
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
-            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
     private fun setAdapters(){
-        searchItemAdapter = MenuItemAdapter(requireContext(), 0 , filteredMenuList)
+        searchItemAdapter = MenuItemAdapter(requireContext(), filteredMenuList)
         binding.menuFragmentMenuItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.menuFragmentMenuItemList.adapter = searchItemAdapter
     }
-    private fun setListeners(){
-
-        binding.menuFragmentSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String): Boolean {
-                filterMenuItems(query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                filterMenuItems(newText)
-                return true
-            }
-        })
-
-    }
-    private fun filterMenuItems(query : String){
+    private fun filterMenuItems(){
         filteredMenuList.clear()
         searchMenuList.forEachIndexed { index, menuItem ->
-            if(menuItem.foodName?.contains(query,ignoreCase = true) == true){
+            if(menuItem.foodName!!.contains(currentSearch,ignoreCase = true)){
                 filteredMenuList.add(searchMenuList[index])
             }
         }
         searchItemAdapter.notifyDataSetChanged()
     }
+    private fun setListeners(){
 
+        binding.menuFragmentSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                currentSearch = query.orEmpty()
+                filterMenuItems()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                currentSearch = newText.orEmpty()
+                filterMenuItems()
+                return true
+            }
+        })
+    }
 }

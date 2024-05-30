@@ -15,6 +15,7 @@ import com.example.foodorderingapp.FoodDescriptionActivity
 import com.example.foodorderingapp.dataModels.CartItemModel
 import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,9 +23,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class MenuItemAdapter(private val context : Context,
-                      private val allowEdits : Int,
-                      private val menuList : MutableList<MenuItemModel>,
-                      private val menuItemReference : MutableList<String> = mutableListOf()) : RecyclerView.Adapter<MenuItemAdapter.MenuItemHolder>() {
+                      private val menuList : MutableList<MenuItemModel>) : RecyclerView.Adapter<MenuItemAdapter.MenuItemHolder>() {
 
     init {
         val auth = FirebaseAuth.getInstance()
@@ -33,28 +32,6 @@ class MenuItemAdapter(private val context : Context,
         val userId = auth.currentUser?.uid?:""
 
         cartReference = database.reference.child("food ordering app").child("users").child(userId).child("cart items")
-        val menuReference = database.reference.child("menu")
-
-        if(allowEdits==1){
-            menuReference.addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for( menuItemSnapshot in snapshot.children){
-                        if(!menuItemReference.contains(menuItemSnapshot.key)){
-                            val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
-                            if (menuItem != null) {
-                                menuList.add(menuItem)
-                            }
-                            menuItemSnapshot.key?.let { menuItemReference.add(it) }
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context,"Database Access Failed",Toast.LENGTH_SHORT).show()
-                }
-
-            })
-        }
     }
     companion object{
         lateinit var cartReference: DatabaseReference

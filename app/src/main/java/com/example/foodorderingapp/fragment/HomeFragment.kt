@@ -21,8 +21,10 @@ import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.example.foodorderingapp.databinding.FragmentHomeBinding
 import com.example.foodorderingapp.fragment.bottomSheets.MenuBottomSheetFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlin.math.abs
@@ -33,13 +35,14 @@ class HomeFragment : Fragment() {
     private lateinit var auth : FirebaseAuth
     private lateinit var database : FirebaseDatabase
 
+    private lateinit var menuReference: DatabaseReference
+
     private lateinit var homeFragmentViewPager : ViewPager2
     private lateinit var homeFragmentHandler: Handler
     private lateinit var homeFragmentImageList : ArrayList<Int>
     private lateinit var homeFragmentImageAdapter: HomeFragmentImageAdapter
 
     private lateinit var menuList: MutableList<MenuItemModel>
-    private lateinit var menuItemReference: MutableList<String>
     private lateinit var homeFragmentPopularItemAdapter: MenuItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,42 +62,34 @@ class HomeFragment : Fragment() {
         setTransformers()
         setListeners()
         initializeUiElements()
+        setAdapters()
+        retrieveMenu()
     }
 
     private fun initializeUiElements(){
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
+        menuReference = database.reference.child("menu")
         menuList = mutableListOf()
-        menuItemReference = mutableListOf()
-
-        retrieveMenu()
     }
     private fun retrieveMenu(){
-        val menuReference = database.reference.child("menu")
-
-        menuReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                menuList.clear()
-
-                for (menuItemSnapshot in snapshot.children){
-                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
-                    menuItem?.let {
-                        menuList.add(menuItem)
-                    }
-                    menuItemSnapshot.key?.let { menuItemReference.add(it) }
+        menuReference.addChildEventListener(object : ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val menuItem = snapshot.getValue(MenuItemModel::class.java)
+                if(menuItem!=null){
+                    menuList.add(menuItem)
+                    homeFragmentPopularItemAdapter.notifyItemInserted(menuList.size-1)
                 }
-                setAdapters()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
-            }
-
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
     private fun setAdapters(){
-        homeFragmentPopularItemAdapter = MenuItemAdapter(requireActivity(),1 , menuList, menuItemReference)
+        homeFragmentPopularItemAdapter = MenuItemAdapter(requireActivity(), menuList)
         binding.homeFragmentPopularItemList.layoutManager = LinearLayoutManager(requireContext())
         binding.homeFragmentPopularItemList.adapter = homeFragmentPopularItemAdapter
     }
@@ -110,7 +105,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        binding.homeFragmentViewMenu.setOnClickListener{
+        binding.homeFragmentViewMenu.setOnClickListener{//TODO
             Toast.makeText(requireContext(),"Hello",Toast.LENGTH_SHORT).show()
         }
 
