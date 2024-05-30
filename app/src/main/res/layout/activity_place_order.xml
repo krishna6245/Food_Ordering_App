@@ -64,7 +64,7 @@
             android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/orderActivityNameLayoutUserName"
+            android:id="@+id/orderActivityUserName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="clip_horizontal|center_vertical"
@@ -111,7 +111,7 @@
             android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/orderActivityNameLayoutUserAddress"
+            android:id="@+id/orderActivityUserAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="clip_horizontal|center_vertical"
@@ -148,7 +148,7 @@
         app:layout_constraintTop_toBottomOf="@+id/orderActivityAddressLayout">
 
         <TextView
-            android:id="@+id/orderActivityName"
+            android:id="@+id/orderActivityPhoneText"
             android:layout_width="85dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -158,7 +158,7 @@
             android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/profileFragmentNameLayoutUserName"
+            android:id="@+id/orderActivityUserPhoneNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="clip_horizontal|center_vertical"

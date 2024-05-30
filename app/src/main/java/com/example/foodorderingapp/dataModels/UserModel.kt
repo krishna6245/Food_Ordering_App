@@ -1,7 +1,8 @@
 package com.example.foodorderingapp.dataModels
 
 data class UserModel(
-    val userName : String,
-    val email : String,
-    val password : String,
+    var userName : String? = null,
+    val email : String? = null,
+    var phoneNumber : String? = null,
+    var address: String? = null,
 )

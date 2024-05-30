@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -38,7 +39,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var confirmPasswordEditText: EditText
 
     private lateinit var auth : FirebaseAuth
-    private lateinit var database : DatabaseReference
+    private lateinit var database : FirebaseDatabase
 
     private lateinit var gso : GoogleSignInOptions
     private lateinit var googleSignInClient : GoogleSignInClient
@@ -74,7 +75,7 @@ class SignupActivity : AppCompatActivity() {
         confirmPasswordEditText = binding.signupActivityConfirmPasswordEditText
 
         auth = FirebaseAuth.getInstance()
-        database = Firebase.database.getReference("food ordering app")
+        database = FirebaseDatabase.getInstance()
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_client_id))
@@ -97,12 +98,9 @@ class SignupActivity : AppCompatActivity() {
                 email.trim()
                 password.trim()
 
-                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->  // User SignUp
                     if(task.isSuccessful){
-                        val userId = auth.currentUser!!.uid
-                        val user = UserModel(name,email,password)
-
-                        database.child("users").child(userId).setValue(user)
+                        storeUserData()
 
                         val intent = Intent(this , MainActivity::class.java)
                         startActivity(intent)
@@ -176,20 +174,32 @@ class SignupActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken : String){
         val credential = GoogleAuthProvider.getCredential(idToken,null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this){task ->
+            .addOnCompleteListener(this){task ->   //User SignUp
                 if(task.isSuccessful){
-
-                    //TODO
-                    //Create user record in database
+                    storeUserData()
 
                     val intent = Intent(this@SignupActivity , MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
-                    return@addOnCompleteListener
                 }
-
-                Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_SHORT).show()
+                else{
+                    Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_SHORT).show()
+                }
             }
+    }
+    private fun storeUserData(){
+        val user = auth.currentUser
+
+        val userId = user?.uid
+        val userName = user?.displayName
+        val userEmail = user?.email
+        val userPhoneNumber = user?.phoneNumber
+
+        val userModel = UserModel(userName,userEmail,userPhoneNumber)
+
+        val userReference = database.reference.child("food ordering app").child("users").child(userId.toString())
+
+        userReference.child("user data").setValue(userModel)
     }
     private fun getUserData(){
         name = nameEditText.text.toString()

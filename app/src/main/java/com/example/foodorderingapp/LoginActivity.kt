@@ -10,6 +10,7 @@ import android.text.style.AbsoluteSizeSpan
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
+import com.example.foodorderingapp.dataModels.UserModel
 import com.example.foodorderingapp.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -26,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var auth : FirebaseAuth
-    private lateinit var database : DatabaseReference
+    private lateinit var database : FirebaseDatabase
 
     private lateinit var gso : GoogleSignInOptions
     private lateinit var googleSignInClient : GoogleSignInClient
@@ -66,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = binding.loginActivityPasswordEditText
 
         auth = FirebaseAuth.getInstance()
-        database = Firebase.database.getReference("food ordering app")
+        database = FirebaseDatabase.getInstance()
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_client_id))
@@ -88,9 +90,8 @@ class LoginActivity : AppCompatActivity() {
                 password.trim()
 
                 auth.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener {task ->
+                    .addOnCompleteListener {task ->  //User Login
                         if(task.isSuccessful){
-                            val userId = auth.currentUser
                             val intent=Intent(this,MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
@@ -151,12 +152,8 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken : String){
         val credential = GoogleAuthProvider.getCredential(idToken , null)
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(this){task->
+            .addOnCompleteListener(this){task->  //User Login
                 if(task.isSuccessful){
-
-                    //TODO
-                    //Create user record in database
-
                     val intent = Intent(this@LoginActivity , MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)

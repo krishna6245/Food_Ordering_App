@@ -99,13 +99,17 @@ class CartFragment : Fragment() {
                 Handler().postDelayed({
                     val intent = Intent(requireContext() , PlaceOrderActivity::class.java)
 
+                    var cartTotal = 0
 
+                    for( cartItem in cartItemList){
+                        val menuItem = cartItem.menuItem
+                        if (menuItem != null) {
+                            cartTotal += cartItem.quantity?.times(menuItem.foodPrice) ?: 0
+                        }
+                    }
 
-                    intent.putStringArrayListExtra("key_names", ArrayList(cartFragmentFoodNames))
-                    intent.putIntegerArrayListExtra("key_images", ArrayList(cartFragmentFoodImages))
-                    intent.putIntegerArrayListExtra("key_prices", ArrayList(cartFragmentFoodPrices))
-                    intent.putIntegerArrayListExtra("key_quantities", ArrayList(cartFragmentFoodQuantities))
-                    intent.putExtra("key_flag" , true)
+                    intent.putExtra("key_cart_total",cartTotal)
+
                     startActivity(intent)
                 },0)
             }
