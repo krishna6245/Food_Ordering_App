@@ -80,6 +80,7 @@ class AddFoodItemActivity : AppCompatActivity() {
             foodIngredientsList.add(ingredient)
         }
         binding.addFoodItemActivityAddItemButton.setOnClickListener{
+            binding.addFoodItemActivityAddItemButton.isEnabled = false
             createMenuItem()
         }
         foodImageButton.setOnClickListener{

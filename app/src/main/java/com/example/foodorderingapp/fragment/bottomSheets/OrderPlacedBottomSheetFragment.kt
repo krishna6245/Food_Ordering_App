@@ -1,13 +1,17 @@
 package com.example.foodorderingapp.fragment.bottomSheets
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import com.example.foodorderingapp.MainActivity
 import com.example.foodorderingapp.databinding.FragmentOrderPlacedBottomSheetBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderPlacedBottomSheetFragment : BottomSheetDialogFragment() {
@@ -24,6 +28,10 @@ class OrderPlacedBottomSheetFragment : BottomSheetDialogFragment() {
         binding = FragmentOrderPlacedBottomSheetBinding.inflate(inflater,container,false)
         init()
         return binding.root
+    }
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        (activity as? FragmentActivity)?.finish()
     }
     private fun init(){
         setListeners()
