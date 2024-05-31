@@ -126,10 +126,14 @@ class PlaceOrderActivity : AppCompatActivity() {
                 userReference.child("user data").setValue(userData)
                 val orderPlacedBottomSheetDialog = OrderPlacedBottomSheetFragment()
                 orderPlacedBottomSheetDialog.show(supportFragmentManager,"Tag")
+                emptyCart()
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Order not placed",Toast.LENGTH_SHORT).show()
             }
+    }
+    private fun emptyCart(){
+        database.reference.child("food ordering app").child("users").child(userId).child("cart items").removeValue()
     }
     private fun checkCompleteUserData() : Boolean{
         val userName =  binding.orderActivityUserName.text.toString()
