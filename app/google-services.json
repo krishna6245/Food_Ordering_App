@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "748964621753-85r4cciliv69rnjd4a44dlihl3am6i9k.apps.googleusercontent.com",
+          "client_id": "748964621753-t4c5r6ulkh4fktpgtq7kamhc9agu1dsj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.adminpanel",
-            "certificate_hash": "1335a5b83d56d118163cc7cdc0a077e1c101dffc"
+            "certificate_hash": "06ab7f03aad9bda74d0c6ad063bfbfdb2069ee87"
           }
         },
         {
@@ -52,11 +52,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "748964621753-62e9grhi89637svie7rnq0sun6h10jlh.apps.googleusercontent.com",
+          "client_id": "748964621753-lh7m02jgj3j01e1tean3gtd0mmplg2q7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.foodorderingapp",
-            "certificate_hash": "1335a5b83d56d118163cc7cdc0a077e1c101dffc"
+            "certificate_hash": "06ab7f03aad9bda74d0c6ad063bfbfdb2069ee87"
           }
         },
         {

@@ -7,6 +7,7 @@ import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
+import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
@@ -46,6 +47,15 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+    }
+    private fun log( s : Any?){
+        Log.d("Login Activity","$s")
+    }
+    private fun log( e : Exception){
+        Log.d("Login Activity","",e)
+    }
+    private fun toast(s : Any?){
+        Toast.makeText(this,"$s",Toast.LENGTH_SHORT).show()
     }
     private fun init(){
         setLayout()
