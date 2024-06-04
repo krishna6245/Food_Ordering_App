@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.UUID
 
 class PlaceOrderActivity : AppCompatActivity() {
 
@@ -106,7 +107,7 @@ class PlaceOrderActivity : AppCompatActivity() {
     private fun placeOrder(){
 
         val currentTime = System.currentTimeMillis()
-        val itemKey = database.reference.child("Order details").push().key
+        val itemKey = UUID.randomUUID().toString()
 
         val orderItem = OrderItemModel(
             userId,
@@ -121,19 +122,27 @@ class PlaceOrderActivity : AppCompatActivity() {
             currentTime
         )
 
-        database.reference.child("Order details").child(itemKey!!).setValue(orderItem)
+        database.reference.child("Order details").push().setValue(orderItem)
             .addOnSuccessListener {
                 userReference.child("user data").setValue(userData)
                 val orderPlacedBottomSheetDialog = OrderPlacedBottomSheetFragment()
                 orderPlacedBottomSheetDialog.show(supportFragmentManager,"Tag")
                 emptyCart()
+                addToHistory(orderItem)
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Order not placed",Toast.LENGTH_SHORT).show()
             }
     }
+    private fun addToHistory(orderItem : OrderItemModel){
+        val historyItemReference = database.reference.child("food ordering app").child("users").child(userId).child("history items")
+
+        historyItemReference.push().setValue(orderItem)
+
+    }
     private fun emptyCart(){
-        database.reference.child("food ordering app").child("users").child(userId).child("cart items").removeValue()
+        val t=database.reference.child("food ordering app").child("users").child(userId).child("cart items")
+        t.removeValue()
     }
     private fun checkCompleteUserData() : Boolean{
         val userName =  binding.orderActivityUserName.text.toString()

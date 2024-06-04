@@ -16,6 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderPlacedBottomSheetFragment : BottomSheetDialogFragment() {
 
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+
     private lateinit var binding : FragmentOrderPlacedBottomSheetBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,12 @@ class OrderPlacedBottomSheetFragment : BottomSheetDialogFragment() {
         init()
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bottomSheet = view.parent as View
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+    }
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         (activity as? FragmentActivity)?.finish()
@@ -39,12 +47,11 @@ class OrderPlacedBottomSheetFragment : BottomSheetDialogFragment() {
     private fun setListeners(){
         binding.apply {
             orderPlacedBottomSheetGoHomeButton.setOnClickListener {
-                Handler().postDelayed({
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
-                },0)
+                closeBottomSheet()
             }
         }
+    }
+    private fun closeBottomSheet(){
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 }

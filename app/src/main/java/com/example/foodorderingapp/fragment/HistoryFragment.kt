@@ -1,24 +1,38 @@
 package com.example.foodorderingapp.fragment
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodorderingapp.R
+import com.bumptech.glide.Glide
 import com.example.foodorderingapp.adapters.HistoryItemAdapter
+import com.example.foodorderingapp.dataModels.HistoryItemModel
+import com.example.foodorderingapp.dataModels.OrderItemModel
 import com.example.foodorderingapp.databinding.FragmentHistoryBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class HistoryFragment : Fragment() {
 
     private lateinit var binding : FragmentHistoryBinding
     private lateinit var historyFragmentAdapter : HistoryItemAdapter
-    private lateinit var historyFragmentFoodNames : MutableList<String>
-    private lateinit var historyFragmentFoodRestaurants : MutableList<String>
-    private lateinit var historyFragmentFoodPrices : MutableList<Int>
-    private lateinit var historyFragmentFoodImages : MutableList<Int>
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+
+    private lateinit var userId: String
+    private lateinit var orderHistoryReference: DatabaseReference
+
+    private var recentBuy: HistoryItemModel? = null
+    private lateinit var previousBuyList: MutableList<HistoryItemModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,33 +48,62 @@ class HistoryFragment : Fragment() {
     }
 
     private fun init(){
-        setLists()
-        setLayout()
+        initializeUiElements()
         setAdapters()
+        retrieveOrderHistory()
     }
-    private fun setLists(){
-        historyFragmentFoodNames = mutableListOf("Biryani","Burger","Pizza","Momos","Rolls","Fries","Sandwich","Muffins")
-        historyFragmentFoodPrices = mutableListOf(100,70,150,60,75,80,40,60)
-        historyFragmentFoodRestaurants = mutableListOf("Surya Restaurant","Monarch Hotel","Shivam Restaurant","Mukesh Momos","Monarch Hotel","Lal Bagh Ka Raja","Durga Canteen","Dreams Bakery")
-        val a:Int = R.drawable.dummy_image
-        val b:Int = R.drawable.dummy_image_1
-        historyFragmentFoodImages = mutableListOf(a,b,a,b,a,b,a,b)
+    private fun retrieveOrderHistory(){
+        orderHistoryReference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val orderItem = snapshot.getValue(OrderItemModel::class.java)
+                if(orderItem!=null){
+                    val cartItemList = orderItem.userOrderList
+                    for( cartItem in cartItemList){
+                        val menuItem = cartItem.menuItem
+
+                        val historyItem = HistoryItemModel(menuItem)
+
+                        updateUi(historyItem)
+                    }
+                }
+            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
-    private fun setLayout(){
-        binding.apply {
-            historyFragmentRecentBuyFoodName.text = historyFragmentFoodNames[0]
-            historyFragmentRecentBuyFoodImage.setImageResource(historyFragmentFoodImages[0])
-            historyFragmentRecentBuyRestaurant.text = historyFragmentFoodRestaurants[0]
-            val viewPrice = "Rs.${historyFragmentFoodPrices[0]}"
-            historyFragmentRecentBuyFoodPrice.text = viewPrice
+    private fun updateUi(historyItem: HistoryItemModel){
+        if(recentBuy != null){
+            previousBuyList.add(0, recentBuy!!)
+            historyFragmentAdapter.notifyItemInserted(previousBuyList.size-1)
         }
-        historyFragmentFoodNames.removeAt(0)
-        historyFragmentFoodImages.removeAt(0)
-        historyFragmentFoodPrices.removeAt(0)
-        historyFragmentFoodRestaurants.removeAt(0)
+        recentBuy = historyItem
+        updateRecentBuy()
+    }
+    private fun updateRecentBuy(){
+        binding.apply {
+            val menuItem = recentBuy!!.menuItem!!
+            val foodPrice = "Rs.${menuItem.foodPrice}"
+            val imageUri = Uri.parse(menuItem.foodImage)
+
+            historyFragmentRecentBuyFoodName.text = menuItem.foodName
+            historyFragmentRecentBuyFoodPrice.text = foodPrice
+            historyFragmentRecentBuyRestaurant.text = menuItem.restaurantName
+            context?.let { Glide.with(it).load(imageUri).into(historyFragmentRecentBuyFoodImage) }
+        }
+    }
+    private fun initializeUiElements(){
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        userId = auth.currentUser!!.uid
+        orderHistoryReference = database.reference.child("food ordering app").child("users").child(userId).child("history items")
+
+        previousBuyList = mutableListOf()
     }
     private fun setAdapters(){
-        historyFragmentAdapter = HistoryItemAdapter(historyFragmentFoodNames,historyFragmentFoodImages,historyFragmentFoodRestaurants,historyFragmentFoodPrices,requireActivity())
+        historyFragmentAdapter = HistoryItemAdapter(previousBuyList,requireActivity())
         binding.historyFragmentPreviousBuyList.layoutManager = LinearLayoutManager(requireContext())
         binding.historyFragmentPreviousBuyList.adapter = historyFragmentAdapter
     }

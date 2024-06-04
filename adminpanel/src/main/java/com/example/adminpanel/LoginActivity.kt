@@ -127,6 +127,7 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
+                Log.d("ttag","hello",e)
                 Toast.makeText(this,"Can't create Account. Try Again",Toast.LENGTH_SHORT).show()
             }
         }

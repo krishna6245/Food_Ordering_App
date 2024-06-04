@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -30,26 +31,6 @@ class CartItemAdapter(private val cartItems: MutableList<CartItemModel>,
         val userId = auth.currentUser?.uid?:""
 
         cartItemReference = database.reference.child("food ordering app").child("users").child(userId).child("cart items")
-
-        cartItemReference.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(dataSnapshot in snapshot.children){
-                    if(!cartItemId.contains(dataSnapshot.key)){
-                        val cartItem = dataSnapshot.getValue(CartItemModel::class.java)
-                        if (cartItem != null) {
-                            cartItems.add(cartItem)
-                        }
-                        dataSnapshot.key?.let { cartItemId.add(it) }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,"Database access failed",Toast.LENGTH_SHORT).show()
-            }
-
-        })
-
     }
 
     companion object{
@@ -105,17 +86,18 @@ class CartItemAdapter(private val cartItems: MutableList<CartItemModel>,
             updateDatabaseChange(position)
         }
         private fun removeItem(position: Int){
-            updateDatabaseRemoval(position)
+            val location = cartItemId[position]
             cartItems.removeAt(position)
             cartItemId.removeAt(position)
+            updateDatabaseRemoval(location)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position,cartItems.size)
         }
         private fun updateDatabaseChange(position: Int){
             cartItemReference.child(cartItemId[position]).setValue(cartItems[position])
         }
-        private fun updateDatabaseRemoval(position: Int){
-            cartItemReference.child(cartItemId[position]).removeValue().addOnSuccessListener {
+        private fun updateDatabaseRemoval(locatiion: String){
+            cartItemReference.child(locatiion).removeValue().addOnSuccessListener {
                 Toast.makeText(context,"Item removal successful",Toast.LENGTH_SHORT).show()
             }
         }

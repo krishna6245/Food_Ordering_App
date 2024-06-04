@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodorderingapp.PlaceOrderActivity
 import com.example.foodorderingapp.R
 import com.example.foodorderingapp.adapters.CartItemAdapter
+import com.example.foodorderingapp.adapters.EmptyCartAdapter
 import com.example.foodorderingapp.dataModels.CartItemModel
 import com.example.foodorderingapp.dataModels.MenuItemModel
 import com.example.foodorderingapp.databinding.FragmentCartBinding
@@ -27,6 +28,7 @@ import com.google.firebase.database.ValueEventListener
 class CartFragment : Fragment() {
     private lateinit var binding:FragmentCartBinding
     private lateinit var cartFragmentAdapter: CartItemAdapter
+    private lateinit var emptyCartAdapter: EmptyCartAdapter
 
     private lateinit var cartItemList: MutableList<CartItemModel>
     private lateinit var cartItemReferences: MutableList<String>
@@ -73,15 +75,16 @@ class CartFragment : Fragment() {
                     cartItemList.add(cartItem)
                     snapshot.key?.let { cartItemReferences.add(it) }
                     cartFragmentAdapter.notifyItemInserted(cartItemList.size-1)
+
+                    if( binding.cartFragmentCartItemList.adapter == emptyCartAdapter ){
+                        binding.cartFragmentCartItemList.adapter = cartFragmentAdapter
+                    }
                 }
             }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}//TODO
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                val cartItem = snapshot.getValue(CartItemModel::class.java)
-                if(cartItem!=null && cartItemReferences.contains(snapshot.key)){
-                    cartItemList.remove(cartItem)
-                    cartItemReferences.remove(snapshot.key)
-                    cartFragmentAdapter.notifyDataSetChanged()
+                if(cartItemList.size == 0){
+                    binding.cartFragmentCartItemList.adapter = emptyCartAdapter
                 }
             }
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
@@ -91,11 +94,18 @@ class CartFragment : Fragment() {
     private fun setAdapters(){
         cartFragmentAdapter = CartItemAdapter(cartItemList,cartItemReferences,requireActivity())
         binding.cartFragmentCartItemList.layoutManager = LinearLayoutManager(requireContext())
-        binding.cartFragmentCartItemList.adapter = cartFragmentAdapter
+
+        emptyCartAdapter = EmptyCartAdapter()
+
+        binding.cartFragmentCartItemList.adapter = emptyCartAdapter
     }
     private fun setListeners(){
         binding.apply {
             cartFragmentProccedButton.setOnClickListener {
+                if(cartItemList.size == 0){
+                    Toast.makeText(context,"Cart is empty",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 Handler().postDelayed({
                     val intent = Intent(requireContext() , PlaceOrderActivity::class.java)
 
