@@ -24,6 +24,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.lang.Exception
+import java.util.UUID
 
 class AddFoodItemActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddFoodItemBinding
@@ -39,6 +40,8 @@ class AddFoodItemActivity : AppCompatActivity() {
 
     private lateinit var userId: String
     private lateinit var userReference: DatabaseReference
+    private lateinit var menuReference: DatabaseReference
+    private lateinit var userMenuReference: DatabaseReference
     private lateinit var restaurantName: String
     private var userData: UserModel = UserModel()
 
@@ -64,6 +67,8 @@ class AddFoodItemActivity : AppCompatActivity() {
 
         userId = auth.currentUser!!.uid
         userReference = database.reference.child("admin panel").child("users").child(userId)
+        menuReference = database.reference.child("menu")
+        userMenuReference = userReference.child("menu")
 
         userReference.child("user data").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -155,9 +160,7 @@ class AddFoodItemActivity : AppCompatActivity() {
             foodIngredientsEditText.requestFocus()
             return
         }
-
-        val menuReference = database.getReference("menu")
-        val menuItemKey = menuReference.push().key
+        val menuItemKey = UUID.randomUUID().toString()
 
         val storageReference = FirebaseStorage.getInstance().reference
         val imageReference = storageReference.child("menu_images/${menuItemKey}.jpg")
@@ -175,11 +178,10 @@ class AddFoodItemActivity : AppCompatActivity() {
                         foodDescription = foodDescription,
                         foodIngredients = foodIngredientsList
                     )
-                    menuItemKey?.let { key ->
-                        menuReference.child(key).setValue(newMenuItem)
-                        toast("Item Created Successfully")
-                        finish()
-                    }
+                    menuReference.child(menuItemKey).setValue(newMenuItem)
+                    userMenuReference.push().setValue(menuItemKey)
+                    toast("Item Created Successfully")
+                    finish()
 
                 }
                 .addOnFailureListener {

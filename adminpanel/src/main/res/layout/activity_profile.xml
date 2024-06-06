@@ -85,7 +85,7 @@
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/profileActivityNameLayoutUserName"
+            android:id="@+id/profileActivityUserName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -99,7 +99,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/profileActivityAddressLayout"
+        android:id="@+id/profileActivityBusinessNameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -117,23 +117,24 @@
         app:layout_constraintTop_toBottomOf="@id/profileActivityNameLayout">
 
         <TextView
-            android:id="@+id/profileActivityAddressText"
+            android:id="@+id/profileActivityBusinessNameText"
             android:layout_width="90dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/lato_bold"
             android:gravity="center_vertical"
-            android:text="Address"
+            android:text="Business Name"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/profileActivityNameLayoutUserAddress"
+            android:id="@+id/profileActivityBusinessName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
             android:ellipsize="none"
             android:fontFamily="@font/lato_regular"
-            android:hint="Your Address"
+            android:hint="Your Business Name"
+            android:layout_gravity="center"
             android:inputType="textMultiLine"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -156,7 +157,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileActivityAddressLayout">
+        app:layout_constraintTop_toBottomOf="@id/profileActivityBusinessNameLayout">
 
         <TextView
             android:id="@+id/profileActivityEmailText"
@@ -168,7 +169,7 @@
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/profileActivityNameLayoutUserEmail"
+            android:id="@+id/profileActivityEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -209,7 +210,7 @@
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/profileActivityNameLayoutUserPhoneNumber"
+            android:id="@+id/profileActivityPhoneNumber"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -217,47 +218,6 @@
             android:fontFamily="@font/lato_regular"
             android:hint="Your Phone Number"
             android:inputType="phone"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/profileActivityPasswordLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/custom_editview"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="15dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileActivityPhoneNumberLayout">
-
-        <TextView
-            android:id="@+id/profileActivityPasswordText"
-            android:layout_width="90dp"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center_vertical"
-            android:text="Password"
-            android:textSize="18sp" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/profileActivityPassword"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:fontFamily="@font/lato_regular"
-            android:hint="Your Password"
-            android:inputType="textPassword"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textSize="18sp" />
