@@ -2,10 +2,8 @@ package com.example.adminpanel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.example.adminpanel.adapters.ViewMenuAdapter
 import com.example.adminpanel.dataModels.MenuItemModel
 import com.example.adminpanel.dataModels.UserModel
@@ -26,19 +24,22 @@ class ViewMenuActivity : AppCompatActivity() {
 
     private lateinit var userId: String
     private lateinit var userData: UserModel
-    private lateinit var userReference: DatabaseReference
     private lateinit var restaurantName: String
+
+    private lateinit var userReference: DatabaseReference
     private lateinit var menuReference: DatabaseReference
+    private lateinit var userMenuReference: DatabaseReference
 
     private lateinit var menuList : MutableList<MenuItemModel>
-    private lateinit var menuItemReference : MutableList<String>
+    private lateinit var menuListReference : MutableList<String>
+    private lateinit var userMenuListReference: MutableList<String>
     private lateinit var viewMenuAdapter: ViewMenuAdapter
 
     private lateinit var menuListener: ChildEventListener
 
 
-    private fun toast(s : Any?){
-        Toast.makeText(this,"$s", Toast.LENGTH_SHORT).show()
+    private fun toast(message : Any?){
+        Toast.makeText(this,"$message", Toast.LENGTH_SHORT).show()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +60,9 @@ class ViewMenuActivity : AppCompatActivity() {
         userId = auth.currentUser!!.uid
 //        menuReference = database.reference.child("admin panel").child(userId).child()
 
-        menuReference = database.reference.child("menu")
         userReference = database.reference.child("admin panel").child("users").child(userId)
+        menuReference = database.reference.child("menu")
+        userMenuReference = userReference.child("menu")
 
         userReference.child("user data").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -74,18 +76,25 @@ class ViewMenuActivity : AppCompatActivity() {
         })
 
         menuList = mutableListOf()
-        menuItemReference = mutableListOf()
+        menuListReference = mutableListOf()
+        userMenuListReference = mutableListOf()
     }
     private fun retrieveMenuItems(){
         menuListener = object : ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val menuItem = snapshot.getValue(MenuItemModel::class.java)
-                if(menuItem!!.restaurantName == restaurantName){
-                    menuItem.let {
-                        menuList.add(menuItem)
+                val currentItemReference = snapshot.getValue(String::class.java)
+                if(currentItemReference != null){
+                    menuReference.child(currentItemReference).get().addOnSuccessListener {
+                        val menuItem = it.getValue(MenuItemModel::class.java)!!
+
+                        menuItem.let {
+                            menuList.add(menuItem)
+                        }
+                        menuListReference.add(currentItemReference)
+                        userMenuListReference.add(snapshot.key!!)
+
+                        viewMenuAdapter.notifyItemInserted(menuList.size-1)
                     }
-                    menuItemReference.add(snapshot.key!!)
-                    viewMenuAdapter.notifyItemInserted(menuList.size-1)
                 }
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?){}
@@ -93,10 +102,10 @@ class ViewMenuActivity : AppCompatActivity() {
             override fun onChildRemoved(snapshot: DataSnapshot) {}
             override fun onCancelled(error: DatabaseError) {}
         }
-        menuReference.addChildEventListener(menuListener)
+        userMenuReference.addChildEventListener(menuListener)
     }
     private fun setAdapters(){
-        viewMenuAdapter = ViewMenuAdapter(this,menuList,menuItemReference)
+        viewMenuAdapter = ViewMenuAdapter(this,menuList,menuListReference,userMenuListReference)
         binding.viewMenuActivityItemList.layoutManager = LinearLayoutManager(applicationContext)
         binding.viewMenuActivityItemList.adapter = viewMenuAdapter
     }
@@ -109,6 +118,6 @@ class ViewMenuActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        menuReference.removeEventListener(menuListener)
+        userMenuReference.removeEventListener(menuListener)
     }
 }
