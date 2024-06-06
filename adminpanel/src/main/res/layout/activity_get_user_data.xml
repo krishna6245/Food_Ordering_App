@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GetUserDataActivity">
+
+  <ImageView
+      android:id="@+id/getUserDataActivityAppLogo"
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:layout_marginTop="30dp"
+      android:contentDescription="@string/app_logo"
+      android:src="@drawable/app_logo"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/getUserDataActivityAppName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:fontFamily="@font/yeonsung_regular"
+      android:text="@string/application_name"
+      android:textAllCaps="false"
+      android:textColor="@color/accent_color"
+      android:textSize="50sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/getUserDataActivityAppLogo" />
+
+  <TextView
+      android:id="@+id/getUserDataActivityAppTitleText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/yatraone_regular"
+      android:gravity="center"
+      android:text="Complete your profile"
+      android:textColor="@color/accent_color"
+      android:textSize="20sp"
+      android:layout_marginTop="20dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/getUserDataActivityAppName" />
+
+<!--  TODO: Location View-->
+<!--  <com.google.android.material.textfield.TextInputLayout-->
+<!--      android:id="@+id/getUserDataActivityLocationView"-->
+<!--      style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginStart="25dp"-->
+<!--      android:layout_marginTop="10dp"-->
+<!--      android:layout_marginEnd="25dp"-->
+<!--      android:background="@drawable/custom_button_white"-->
+<!--      android:paddingTop="2dp"-->
+<!--      android:paddingBottom="2dp"-->
+<!--      app:boxStrokeWidth="0dp"-->
+<!--      app:boxStrokeWidthFocused="0dp"-->
+<!--      app:endIconDrawable="@drawable/down_arrow"-->
+<!--      app:endIconTint="@color/black"-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintStart_toStartOf="parent"-->
+<!--      app:layout_constraintTop_toBottomOf="@+id/getUserDataActivityAppTitleText">-->
+
+<!--    <AutoCompleteTextView-->
+<!--        android:id="@+id/getUserDataActivityLocationList"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:fontFamily="@font/lato_bold"-->
+<!--        android:gravity="top"-->
+<!--        android:hint="Choose Location:- "-->
+<!--        android:inputType="none"-->
+<!--        android:textColorHint="@color/black" />-->
+<!--  </com.google.android.material.textfield.TextInputLayout>-->
+
+  <androidx.appcompat.widget.AppCompatEditText
+      android:id="@+id/getUserDataActivityOwnerName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="25dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="25dp"
+      android:background="@drawable/custom_editview"
+      android:drawableStart="@drawable/name_icon"
+      android:drawablePadding="15dp"
+      android:fontFamily="@font/yatraone_regular"
+      android:hint="Owner Name"
+      android:inputType="text"
+      android:paddingStart="30dp"
+      android:paddingTop="15dp"
+      android:paddingEnd="15dp"
+      android:paddingBottom="15dp"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/getUserDataActivityAppTitleText" />
+
+  <androidx.appcompat.widget.AppCompatEditText
+      android:id="@+id/getUserDataActivityBusinessName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="25dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="25dp"
+      android:background="@drawable/custom_editview"
+      android:drawableStart="@drawable/restaurant_icon"
+      android:drawablePadding="15dp"
+      android:fontFamily="@font/yatraone_regular"
+      android:hint="Business Name"
+      android:inputType="text"
+      android:paddingStart="30dp"
+      android:paddingTop="15dp"
+      android:paddingEnd="15dp"
+      android:paddingBottom="15dp"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/getUserDataActivityOwnerName" />
+
+  <androidx.appcompat.widget.AppCompatEditText
+      android:id="@+id/getUserDataActivityPhoneNumber"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="25dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginEnd="25dp"
+      android:background="@drawable/custom_editview"
+      android:drawableStart="@drawable/phone_icon"
+      android:drawablePadding="15dp"
+      android:fontFamily="@font/yatraone_regular"
+      android:hint="Phone Number"
+      android:inputType="phone"
+      android:paddingStart="30dp"
+      android:paddingTop="15dp"
+      android:paddingEnd="15dp"
+      android:paddingBottom="15dp"
+      android:textSize="16sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/getUserDataActivityBusinessName" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/getUserDataActivitySaveInformationButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:background="@drawable/custom_button"
+      android:fontFamily="@font/yeonsung_regular"
+      android:paddingStart="40dp"
+      android:paddingTop="20dp"
+      android:paddingEnd="40dp"
+      android:paddingBottom="20dp"
+      android:textAllCaps="false"
+      android:text="Save Information"
+      android:textSize="20dp"
+      android:textColor="@color/white"
+      android:layout_marginBottom="40dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

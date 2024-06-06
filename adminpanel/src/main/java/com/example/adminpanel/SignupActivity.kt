@@ -28,8 +28,6 @@ import com.google.firebase.ktx.Firebase
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
-    private lateinit var locationList : MutableList<String>
-    private lateinit var locationItemAdapter : ArrayAdapter<String>
 
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
@@ -38,19 +36,17 @@ class SignupActivity : AppCompatActivity() {
 
     private val googleSignUpRequestCode = 100
 
-    private lateinit var ownerNameEditText: EditText
-    private lateinit var businessNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
-    private lateinit var locationAutoCompleteTextView: AutoCompleteTextView
 
-    private lateinit var ownerName : String
-    private lateinit var businessName : String
     private lateinit var email : String
     private lateinit var password : String
     private lateinit var confirmPassword : String
-    private lateinit var location : String
+
+    fun toast(data : Any?){
+        Toast.makeText(this,"$data",Toast.LENGTH_SHORT).show()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
@@ -58,23 +54,13 @@ class SignupActivity : AppCompatActivity() {
         init()
     }
     private fun init(){
-        setLists()
         bindUiElements()
         setListeners()
     }
-    private fun setLists(){
-        locationList = mutableListOf("Agra","Firozabad","Mathura","Hathras","Tundla","Samshabad","Aligarh","Shikohabad","Mainpuri")
-    }
     private fun bindUiElements(){
-        locationItemAdapter = ArrayAdapter(this , android.R.layout.simple_list_item_1 , locationList)
-        binding.signupActivityLocationList.setAdapter(locationItemAdapter)
-
-        ownerNameEditText = binding.signupActivityOwnerName
-        businessNameEditText = binding.signupActivityBusinessName
-        emailEditText = binding.signupActivityEmail
+        emailEditText = binding.signupActivityEmailEditText
         passwordEditText = binding.signupActivityPasswordEditText
         confirmPasswordEditText = binding.signupActivityConfirmPasswordEditText
-        locationAutoCompleteTextView = binding.signupActivityLocationList
 
         auth = FirebaseAuth.getInstance()
         database = Firebase.database.getReference("admin panel")
@@ -87,33 +73,26 @@ class SignupActivity : AppCompatActivity() {
 
     }
     private fun setListeners(){
-        binding.signupActivityAlreadyHaveAcountButton.setOnClickListener {
+        binding.signupActivityAlreadyHaveAccountButton.setOnClickListener {
             finish()
         }
         binding.signupActivityCreateAccountButton.setOnClickListener {
             getUserData()
 
             if(validateUserData()){
-
-                location.trim()
-                ownerName.trim()
-                businessName.trim()
                 email.trim()
 
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
 
                     if(task.isSuccessful){
-                        val userId = auth.currentUser!!.uid
-                        val adminUser = AdminUserModel(location,ownerName,businessName,email,password)
-                        database.child("users").child(userId).setValue(adminUser)
-
-                        val intent = Intent(this@SignupActivity , MainActivity::class.java)
+                        val intent = Intent(this@SignupActivity , GetUserDataActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         return@addOnCompleteListener
                     }
 
                     val exception = task.exception
+                    Log.d("Signup Activity","",exception)
                     if (exception is FirebaseAuthException) {
                         val error = exception.errorCode
 
@@ -132,13 +111,10 @@ class SignupActivity : AppCompatActivity() {
                             passwordEditText.requestFocus()
                             return@addOnCompleteListener
                         }
-                        Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_SHORT).show()
                     }
+                    Toast.makeText(applicationContext , "Failed to create an Account. Try Again!!", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-        binding.signupActivityLocationList.setOnItemClickListener { _, _, _, _ ->
-            locationAutoCompleteTextView.error = null
         }
 
         //Show/Hide Password
@@ -192,18 +168,8 @@ class SignupActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val currentUser = auth.currentUser
                     if (currentUser != null) {
-                        email = currentUser.email.toString()
-                        ownerName = currentUser.displayName.toString()
-                        val userId = currentUser.uid
 
-                        val encryptedEmail = email.replace('.',',')
-
-                        database.child("user id").child(encryptedEmail).setValue(userId.toString())
-
-                        val adminUser = AdminUserModel(null, ownerName, null, email, null)
-                        database.child("user data").child(userId).setValue(adminUser)
-
-                        val intent = Intent(this@SignupActivity, MainActivity::class.java)
+                        val intent = Intent(this@SignupActivity, GetUserDataActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         return@addOnCompleteListener
@@ -217,47 +183,11 @@ class SignupActivity : AppCompatActivity() {
             }
     }
     private fun getUserData(){
-        ownerName = ownerNameEditText.text.toString()
-        businessName = businessNameEditText.text.toString()
         email = emailEditText.text.toString()
         password = passwordEditText.text.toString()
         confirmPassword = confirmPasswordEditText.text.toString()
-        location = locationAutoCompleteTextView.text.toString()
     }
     private fun validateUserData() : Boolean{
-
-        // Checks on Location
-        if (location.isEmpty()){
-            binding.signupActivityLocationList.error = "Select a Location"
-            locationAutoCompleteTextView.requestFocus()
-            return false
-        }
-
-        // Checks on Owner Name
-        if (ownerName.isEmpty()){
-            ownerNameEditText.error = "Owner Name can't be Empty"
-            ownerNameEditText.requestFocus()
-            return false
-        }
-        if (ownerName.isBlank()){
-            ownerNameEditText.error = "Invalid Owner Name"
-            ownerNameEditText.setText("")
-            ownerNameEditText.requestFocus()
-            return false
-        }
-
-        // Checks on business Name
-        if (businessName.isEmpty()){
-            businessNameEditText.error = "Business Name can't be empty"
-            businessNameEditText.requestFocus()
-            return false
-        }
-        if (businessName.isBlank()){
-            businessNameEditText.error = "Invalid Business Name"
-            businessNameEditText.setText("")
-            businessNameEditText.requestFocus()
-            return false
-        }
 
         // Checks on Email
         if (email.isEmpty()){
