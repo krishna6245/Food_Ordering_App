@@ -11,8 +11,8 @@ import com.example.adminpanel.databinding.ActivityViewMenuBinding
 import com.example.adminpanel.databinding.ViewMenuItemLayoutBinding
 
 class ViewMenuAdapter(private val context: Context,
-                      private val menuList : MutableList<MenuItemModel>,
-                      private val quantities : MutableList<Int>) : RecyclerView.Adapter<ViewMenuAdapter.ViewMenuHolder>(){
+                      private val menuList: MutableList<MenuItemModel>,
+                      private val menuListReference: MutableList<String>) : RecyclerView.Adapter<ViewMenuAdapter.ViewMenuHolder>(){
     inner class ViewMenuHolder(private val binding: ViewMenuItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int){
             binding.apply {
@@ -26,38 +26,7 @@ class ViewMenuAdapter(private val context: Context,
 
                 val imageUri = Uri.parse(menuItem.foodImage)
                 Glide.with(context).load(imageUri).into(viewMenuFoodImage)
-
-                viewMenuFoodQuantity.text = quantities[position].toString()
-
-                viewMenuIncreaseButton.setOnClickListener {
-                    increaseItem(position)
-                }
-                viewMenuDecreaseButton.setOnClickListener {
-                    decreaseItem(position)
-                }
-                viewMenuDeleteButton.setOnClickListener {
-                    removeItem(position)
-                }
             }
-        }
-
-        private fun increaseItem(position: Int){
-            quantities[position]++;
-            binding.viewMenuFoodQuantity.text = quantities[position].toString()
-        }
-        private fun decreaseItem(position: Int){
-            quantities[position]--
-            if(quantities[position]==0){
-                removeItem(position)
-                return
-            }
-            binding.viewMenuFoodQuantity.text = quantities[position].toString()
-        }
-        private fun removeItem(position: Int){
-            menuList.removeAt(position)
-            quantities.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position,menuList.size)
         }
     }
 

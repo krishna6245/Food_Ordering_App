@@ -9,8 +9,10 @@ import com.example.adminpanel.adapters.ViewMenuAdapter
 import com.example.adminpanel.dataModels.MenuItemModel
 import com.example.adminpanel.databinding.ActivityViewMenuBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
@@ -20,8 +22,11 @@ class ViewMenuActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var database: FirebaseDatabase
 
+    private lateinit var userId: String
+    private lateinit var menuReference: DatabaseReference
+
     private lateinit var menuList : MutableList<MenuItemModel>
-    private lateinit var allItemFoodQuantities : MutableList<Int>
+    private lateinit var menuItemReference : MutableList<String>
 
     private lateinit var viewMenuAdapter: ViewMenuAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,43 +36,41 @@ class ViewMenuActivity : AppCompatActivity() {
         init()
     }
     private fun init(){
-        setListeners()
         initializeUiElements()
+        setListeners()
+        setAdapters()
+        retrieveMenuItems()
     }
     private fun initializeUiElements(){
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
+        userId = auth.currentUser!!.uid
+//        menuReference = database.reference.child("admin panel").child(userId).child()
+
+        menuReference = database.reference.child("menu")
+
         menuList = mutableListOf()
-
-        allItemFoodQuantities = mutableListOf(1,2,3,10,5,2,8,5)
-
-        retrieveMenuItems()
-
+        menuItemReference = mutableListOf()
     }
     private fun retrieveMenuItems(){
-        val menuReference = database.reference.child("menu")
-
-        menuReference.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                menuList.clear()
-
-                for (menuItemSnapshot in snapshot.children){
-                    val menuItem = menuItemSnapshot.getValue(MenuItemModel::class.java)
-                    menuItem?.let {
-                        menuList.add(menuItem)
-                    }
+        menuReference.addChildEventListener(object : ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val menuItem = snapshot.getValue(MenuItemModel::class.java)
+                menuItem?.let {
+                    menuList.add(menuItem)
                 }
-                setAdapters()
+                menuItemReference.add(snapshot.key!!)
+                viewMenuAdapter.notifyItemInserted(menuList.size-1)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Error","Database Error in ViewMenuActivity:- ${error.toString()}")
-            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?){}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
     private fun setAdapters(){
-        viewMenuAdapter = ViewMenuAdapter(this , menuList , allItemFoodQuantities)
+        viewMenuAdapter = ViewMenuAdapter(this,menuList,menuItemReference)
         binding.viewMenuActivityItemList.layoutManager = LinearLayoutManager(applicationContext)
         binding.viewMenuActivityItemList.adapter = viewMenuAdapter
     }
