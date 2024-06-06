@@ -35,26 +35,33 @@
 
             <TextView
                 android:id="@+id/viewMenuFoodName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="4dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/lato_bold"
+                android:singleLine="true"
                 android:text="Name"
                 android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@+id/viewMenuFoodPrice"
                 app:layout_constraintStart_toEndOf="@+id/viewMenuFoodImage"
                 app:layout_constraintTop_toTopOf="@+id/viewMenuFoodImage" />
 
             <TextView
                 android:id="@+id/viewMenuFoodRestaurantName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:alpha="0.7"
+                android:ellipsize="end"
                 android:fontFamily="@font/lato_bold"
+                android:singleLine="true"
                 android:text="Restaurant Name"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/viewMenuFoodImage"
+                app:layout_constraintEnd_toEndOf="@+id/viewMenuFoodName"
                 app:layout_constraintStart_toStartOf="@+id/viewMenuFoodName" />
 
             <TextView
