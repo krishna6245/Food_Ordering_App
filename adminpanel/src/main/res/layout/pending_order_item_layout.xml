@@ -23,54 +23,47 @@
             android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/pendingOrderItemImage"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="20dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/add_icon" />
-
             <TextView
                 android:id="@+id/pendingOrderItemCustomerName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/lato_bold"
+                android:singleLine="true"
                 android:text="Customer Name"
-                android:textSize="22sp"
-                android:fontFamily="@font/yeonsung_regular"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@+id/pendingOrderItemImage"
-                app:layout_constraintTop_toTopOf="@+id/pendingOrderItemImage" />
+                android:textSize="28sp"
+                app:layout_constraintEnd_toStartOf="@+id/pendingOrderItemDispatchButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/pendingOrderItemQuantityText"
+                android:id="@+id/pendingOrderItemTotalText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity"
+                android:fontFamily="@font/lato_regular"
+                android:text="Total Price:-"
                 android:textSize="18sp"
-                android:fontFamily="@font/yeonsung_regular"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/pendingOrderItemImage"
-                app:layout_constraintStart_toStartOf="@id/pendingOrderItemCustomerName"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/pendingOrderItemCustomerName"
+                app:layout_constraintTop_toBottomOf="@id/pendingOrderItemCustomerName" />
 
             <TextView
-                android:id="@+id/pendingOrderItemQuantity"
+                android:id="@+id/pendingOrderItemTotalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10"
-                android:fontFamily="@font/yeonsung_regular"
+                android:fontFamily="@font/lato_bold"
                 android:textSize="20sp"
                 android:textColor="@color/accent_color"
                 android:layout_marginStart="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/pendingOrderItemQuantityText"
-                app:layout_constraintStart_toEndOf="@+id/pendingOrderItemQuantityText"
-                app:layout_constraintTop_toTopOf="@+id/pendingOrderItemQuantityText" />
+                app:layout_constraintBottom_toBottomOf="@+id/pendingOrderItemTotalText"
+                app:layout_constraintStart_toEndOf="@+id/pendingOrderItemTotalText"
+                app:layout_constraintTop_toTopOf="@+id/pendingOrderItemTotalText" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/pendingOrderItemDispatchButton"
@@ -79,13 +72,13 @@
                 android:text="Dispatch"
                 android:background="@drawable/custom_button"
                 android:textColor="@color/white"
-                android:fontFamily="@font/yeonsung_regular"
+                android:fontFamily="@font/lato_bold"
                 android:layout_marginEnd="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textSize="18sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="15sp"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

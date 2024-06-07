@@ -2,6 +2,7 @@ package com.example.adminpanel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.adminpanel.adapters.PendingOrderAdapter
 import com.example.adminpanel.dataModels.OrderItemModel
@@ -69,8 +70,8 @@ class PendingOrderActivity : AppCompatActivity() {
         orderReference.addChildEventListener(orderListener)
     }
     private fun setAdapters(){
-        adapter = PendingOrderAdapter(applicationContext,orderList,orderListReference)
-        binding.pendingOrderActivityItemList.layoutManager = LinearLayoutManager(applicationContext)
+        adapter = PendingOrderAdapter(this,orderList,orderListReference)
+        binding.pendingOrderActivityItemList.layoutManager = LinearLayoutManager(this)
         binding.pendingOrderActivityItemList.adapter = adapter
     }
     private fun setListeners(){
